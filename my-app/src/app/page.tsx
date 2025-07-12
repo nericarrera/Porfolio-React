@@ -1,6 +1,9 @@
+import SkillsProcessor from './components/SkillsProcesor';
+
 export default function Home() {
   return (
     <main>
+        <SkillsProcessor />
       {/* Hero Section (temporal) */}
       <section className="h-screen flex items-center justify-center pt-20">
         <h1 className="text-4xl font-bold text-white">
