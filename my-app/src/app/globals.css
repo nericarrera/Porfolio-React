@@ -26,3 +26,13 @@ body {
 p-4 {
   padding: 1rem;
 }
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.processor-node {
+  animation: pulse 4s infinite;
+}

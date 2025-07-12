@@ -19,7 +19,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link href="#" className="text-2xl font-bold text-white">
-            <span className="text-sky-500">{"</>"}</span>Dev. Neri Carrera
+            <span className="text-sky-700">{"</>"}</span>Developer
           </Link>
 
           {/* Menú desktop */}
@@ -28,7 +28,7 @@ const Navbar = () => {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-white hover:text-sky-500 transition-colors font-medium"
+                  className="text-white hover:text-sky-700 transition-colors font-medium"
                 >
                   {item.label}
                 </Link>
@@ -71,7 +71,7 @@ const Navbar = () => {
                     {/* Botón X (alineado a la derecha pero con mismo ancho que el menú) */}
                     <div className="w-full flex justify-end pr-4 p-4">
                       <button
-                        className="text-white text-2xl hover:text-sky-500 transition-colors"
+                        className="text-white text-2xl hover:text-sky-700 transition-colors"
                         onClick={() => setIsMenuOpen(false)}
                         aria-label="Cerrar menú"
                       >
@@ -80,12 +80,12 @@ const Navbar = () => {
                     </div>
 
                     {/* Lista de enlaces (mismo ancho que la X) */}
-                    <ul className="bg-black hover:text-sky-500 w-auto flex flex-col gap-4 mt-0 p-9 rounded-b-lg">
+                    <ul className="bg-black hover:text-sky-700 w-auto flex flex-col gap-4 mt-0 p-9 rounded-b-lg">
                       {navItems.map((item) => (
                         <li key={item.href}>
                           <Link
                             href={item.href}
-                            className="block py-3 px-4 text-white hover:bg-gray-800 hover:text-sky-500 rounded-md transition-colors font-medium"
+                            className="block py-3 px-4 text-white hover:bg-gray-800 hover:text-sky-700 rounded-md transition-colors font-medium"
                             onClick={() => setIsMenuOpen(false)}
                           >
                             {item.label}
