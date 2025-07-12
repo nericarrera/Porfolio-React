@@ -18,7 +18,7 @@ const HeroSection = () => {
           {/* Puedes añadir fuentes alternativas aquí si es necesario */}
         </video>
         {/* Capa oscura para mejorar legibilidad */}
-        <div className="absolute inset-0 bg-black/40 "></div>
+        <div className="absolute inset-0 bg-black/40 shadow-xl"></div>
       </div>
 
       {/* Contenido superpuesto */}
