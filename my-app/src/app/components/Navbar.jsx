@@ -17,7 +17,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-50 backdrop-blur-sm bg-black/20 border-b border-gray-800">
+    <nav className="fixed top-0 w-full z-50 backdrop-blur-sm bg-white/20 dark:bg-black/20 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
@@ -38,17 +38,17 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-           <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-amber-300"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? (
-              <SunIcon className="h-5 w-5" />
-            ) : (
-              <MoonIcon className="h-5 w-5" />
-            )}
-          </button>
+            <button
+        onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+        className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-amber-300 transition-colors duration-300"
+        aria-label="Toggle theme"
+      >
+        {resolvedTheme === 'dark' ? (
+          <SunIcon className="h-5 w-5" />
+        ) : (
+          <MoonIcon className="h-5 w-5" />
+        )}
+      </button>
 
           {/* Botón hamburguesa */}
           <button
