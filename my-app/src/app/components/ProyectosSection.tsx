@@ -8,7 +8,7 @@ const ProyectosSection = () => {
       id: 1,
       title: "Portafolio Personal",
       description: "Diseño moderno con Next.js y Tailwind CSS, incluyendo modo oscuro y animaciones.",
-      technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
+      technologies: ["React", "Next.js", "Tailwind CSS", "Framer Motion"],
       image: "/proyecto-portafolio.jpg",
       demoUrl: "#",
       codeUrl: "#"
@@ -34,7 +34,7 @@ const ProyectosSection = () => {
   ];
 
   return (
-    <section id="proyectos" className="py-20 px-4 bg-gray-900">
+    <section id="proyectos" className="py-20 px-4 bg-neutral-950">
       <div className="max-w-6xl mx-auto">
         {/* Título */}
         <motion.h2
@@ -44,7 +44,7 @@ const ProyectosSection = () => {
           viewport={{ once: true }}
           className="text-4xl font-bold text-center text-white mb-4"
         >
-          Mis <span className="text-amber-300">Proyectos</span>
+          Mis <span className="text-sky-500">Proyectos</span>
         </motion.h2>
         
         <motion.p

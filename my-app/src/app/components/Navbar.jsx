@@ -1,10 +1,13 @@
 'use client';
 import Link from "next/link";
 import { useState } from "react";
+import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
+import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
   const navItems = [
     { href: "#formacion", label: "Formación" },
     { href: "#skills", label: "Skills" },
@@ -35,6 +38,17 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
+           <button
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-amber-300"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? (
+              <SunIcon className="h-5 w-5" />
+            ) : (
+              <MoonIcon className="h-5 w-5" />
+            )}
+          </button>
 
           {/* Botón hamburguesa */}
           <button
