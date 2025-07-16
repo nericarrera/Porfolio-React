@@ -6,20 +6,23 @@ const SkillsSection = () => {
     {
       category: "Frontend",
       skills: [
-        { name: "React", level: 90 },
-        { name: "Next.js", level: 85 },
-        { name: "TypeScript", level: 80 },
-        { name: "Tailwind CSS", level: 95 }
+        { name: "HTML", level: 80 },
+        { name: "CSS", level: 80 },
+        { name: "JavaScript", level: 60 },
+        { name: "React", level: 60 },
+        { name: "TypeScript", level: 50 },
+        { name: "Tailwind CSS", level: 55 }
       ],
       icon: "💻"
     },
     {
       category: "Backend",
       skills: [
-        { name: "Node.js", level: 75 },
-        { name: "Express", level: 70 },
-        { name: "MongoDB", level: 65 },
-        { name: "Firebase", level: 60 }
+        { name: "Node.js", level: 25 },
+        { name: "Next.js", level: 60 },
+        { name: "Express", level: 15 },
+        { name: "MongoDB", level: 25 },
+        { name: "Firebase", level: 10 }
       ],
       icon: "⚙️"
     },
@@ -27,16 +30,16 @@ const SkillsSection = () => {
       category: "Herramientas",
       skills: [
         { name: "Git", level: 85 },
-        { name: "Figma", level: 70 },
-        { name: "Vercel", level: 80 },
-        { name: "Docker", level: 50 }
+        { name: "Figma", level: 30 },
+        { name: "Vercel", level: 30 },
+        { name: "Docker", level: 30 }
       ],
       icon: "🛠️"
     }
   ];
 
   return (
-    <section id="skills" className="py-20 px-4 bg-gray-900">
+    <section id="skills" className="py-20 px-4 bg-neutral-950">
       <div className="max-w-6xl mx-auto">
         {/* Título */}
         <motion.h2
@@ -46,7 +49,7 @@ const SkillsSection = () => {
           viewport={{ once: true }}
           className="text-4xl font-bold text-center text-white mb-4"
         >
-          Mis <span className="text-amber-300">Skills</span>
+          Mis <span className="text-sky-500">Skills</span>
         </motion.h2>
         
         <motion.p
@@ -68,7 +71,8 @@ const SkillsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: catIndex * 0.1 }}
               viewport={{ once: true }}
-              className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-amber-400/30 transition-all"
+              className="bg-gray-800/20 rounded-xl p-6 border border-gray-700/30 hover:border-sky-700/30 transition-all 
+             backdrop-blur-md backdrop-filter"
             >
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-3xl">{category.icon}</span>
@@ -80,7 +84,7 @@ const SkillsSection = () => {
                   <div key={skillIndex} className="mb-4">
                     <div className="flex justify-between mb-1">
                       <span className="text-gray-300">{skill.name}</span>
-                      <span className="text-amber-400">{skill.level}%</span>
+                      <span className="text-sky-50">{skill.level}%</span>
                     </div>
                     <div className="w-full bg-gray-700 rounded-full h-2.5">
                       <motion.div
@@ -88,7 +92,7 @@ const SkillsSection = () => {
                         whileInView={{ width: `${skill.level}%` }}
                         transition={{ duration: 1, delay: 0.3 + catIndex * 0.1 }}
                         viewport={{ once: true }}
-                        className="h-2.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-600"
+                        className="h-2.5 rounded-full bg-gradient-to-r from-sky-500 to-green-700"
                       />
                     </div>
                   </div>
