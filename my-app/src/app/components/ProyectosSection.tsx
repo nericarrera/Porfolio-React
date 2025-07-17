@@ -1,33 +1,48 @@
 'use client';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
 const ProyectosSection = () => {
   const proyectos = [
     {
       id: 1,
-      title: "Portafolio Personal",
-      description: "Diseño moderno con Next.js y Tailwind CSS, incluyendo modo oscuro y animaciones.",
-      technologies: ["React", "Next.js", "Tailwind CSS", "Framer Motion"],
-      image: "/proyecto-portafolio.jpg",
-      demoUrl: "#",
-      codeUrl: "#"
+      title: "Proyecto NO-CODE",
+      description: "Login para proyecto de No-Code, Formulario para agregar usuario y revalidar contraseña. Diseño moderno con React + Vite y Tailwind CSS",
+      technologies: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Responsive"],
+      images: [
+        "/no-code-login.png",
+        "/no-code-formulario.png", // Agrega más imágenes
+        "/no-code-contraseña.png"
+      ],
+      demoUrl: "https://github.com/nericarrera/NO-CODE---Grupo",
+      codeUrl: "https://github.com/nericarrera/NO-CODE---Grupo"
     },
     {
       id: 2,
-      title: "E-commerce",
-      description: "Tienda online con carrito de compras, autenticación y pasarela de pagos.",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-      image: "/proyecto-ecommerce.jpg",
-      demoUrl: "#",
-      codeUrl: "#"
+      title: "Daysport E-commerce- (Migrando a React)",
+      description: "Tienda online con carrito de compras, con filtro dinamico, variedad en prendas y accesorios. (En desarrollo).",
+      technologies: ["HTML", "CSS", "Javascript", "React", "Node.js", "Next.js", "Typescript", "Tailwind CSS", "Framer Motion", "Responsive"],
+      images: [
+        "/daysport-1.png",
+        "/daysport-2.png", // Agrega más imágenes
+        "/daysport-3.png",
+        "/daysport-4.png"
+      ],
+      demoUrl: "https://nericarrera.github.io/web-en-desarrollo-daysport.github.io/",
+      codeUrl: "https://nericarrera.github.io/web-en-desarrollo-daysport.github.io/"
     },
     {
       id: 3,
-      title: "App de Tareas",
-      description: "Organizador de tareas con drag & drop, notificaciones y sincronización en la nube.",
-      technologies: ["React", "Firebase", "Redux"],
-      image: "/proyecto-tareas.jpg",
+      title: "Las Bravas E-commerce (Migrando a React)",
+      description: "Tienda online, con carrito de compras, con filtro dinamico. (En desarrollo).",
+      technologies: ["React", "Next.js", "tailwind CSS", "Framer Motion", "Responsive"],
+      images: [
+        "/lasbravas-1.png",
+        "/lasbravas-2.png",
+      ],
       demoUrl: "#",
       codeUrl: "#"
     }
@@ -60,76 +75,11 @@ const ProyectosSection = () => {
         {/* Galería de proyectos */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {proyectos.map((proyecto, index) => (
-            <motion.div
-              key={proyecto.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              whileHover={{ y: -10 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="group relative overflow-hidden rounded-xl bg-gray-800 border border-gray-700 hover:border-amber-400/30 transition-all"
-            >
-              {/* Imagen del proyecto */}
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={proyecto.image}
-                  alt={proyecto.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-
-              {/* Contenido */}
-              <div className="p-6">
-                <h3 className="text-2xl font-bold text-white mb-2">{proyecto.title}</h3>
-                
-                {/* Tecnologías */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {proyecto.technologies.map((tech, i) => (
-                    <span 
-                      key={i}
-                      className="px-3 py-1 bg-gray-700 text-amber-300 rounded-full text-xs"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Descripción (visible siempre) */}
-                <p className="text-gray-300 mb-6">{proyecto.description}</p>
-
-                {/* Botones */}
-                <div className="flex gap-3">
-                  <Link
-                    href={proyecto.demoUrl}
-                    className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors"
-                  >
-                    Ver Demo
-                  </Link>
-                  <Link
-                    href={proyecto.codeUrl}
-                    className="px-4 py-2 bg-transparent border border-gray-600 hover:border-amber-400 text-white rounded-lg text-sm font-medium transition-colors"
-                  >
-                    Código
-                  </Link>
-                </div>
-              </div>
-
-              {/* Efecto hover (opcional) */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                <div className="translate-y-4 group-hover:translate-y-0 transition-transform">
-                  <p className="text-white mb-4">Más detalles:</p>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• Responsive design</li>
-                    <li>• Optimización SEO</li>
-                    <li>• Despliegue en Vercel</li>
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
+            <ProjectCard key={proyecto.id} proyecto={proyecto} index={index} />
           ))}
         </div>
 
-        {/* Botón para más proyectos (opcional) */}
+        {/* Botón para más proyectos */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -138,8 +88,8 @@ const ProyectosSection = () => {
           className="text-center mt-16"
         >
           <Link
-            href="#"
-            className="inline-flex items-center px-6 py-3 border border-amber-400 text-amber-400 hover:bg-amber-400/10 rounded-lg transition-colors"
+            href="#proyectos"
+            className="inline-flex items-center px-6 py-3 border border-sky-500 text-sky-500 hover:bg-sky-500/10 rounded-lg transition-colors"
           >
             Ver todos mis proyectos
             <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -149,6 +99,131 @@ const ProyectosSection = () => {
         </motion.div>
       </div>
     </section>
+  );
+};
+
+const ProjectCard = ({ proyecto, index }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === proyecto.images.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? proyecto.images.length - 1 : prev - 1
+    );
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true }}
+      className="relative overflow-hidden rounded-xl bg-gray-800 border border-gray-700"
+    >
+      {/* Carrusel de imágenes */}
+      <div className="h-48 relative overflow-hidden group">
+        <Link href={proyecto.demoUrl} target="_blank" rel="noopener noreferrer">
+          <Image
+            src={proyecto.images[currentImageIndex]}
+            alt={`${proyecto.title} - Imagen ${currentImageIndex + 1}`}
+            fill
+            className="object-cover"
+            quality={80}
+          />
+        </Link>
+
+        {/* Flechas de navegación */}
+        {proyecto.images.length > 1 && (
+          <>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                prevImage();
+              }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 text-white hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100"
+              aria-label="Imagen anterior"
+            >
+              <ChevronLeftIcon className="h-6 w-6" />
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                nextImage();
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 text-white hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100"
+              aria-label="Imagen siguiente"
+            >
+              <ChevronRightIcon className="h-6 w-6" />
+            </button>
+          </>
+        )}
+
+        {/* Indicadores de posición */}
+        {proyecto.images.length > 1 && (
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+            {proyecto.images.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setCurrentImageIndex(idx);
+                }}
+                className={`h-2 w-2 rounded-full transition-all ${
+                  idx === currentImageIndex ? 'bg-white w-4' : 'bg-white/50'
+                }`}
+                aria-label={`Ir a imagen ${idx + 1}`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Contenido del proyecto */}
+      <div className="p-6">
+        <h3 className="text-2xl font-bold text-white mb-2">{proyecto.title}</h3>
+        
+        <div className="flex flex-wrap gap-2 mb-4">
+          {proyecto.technologies.map((tech, i) => (
+            <span 
+              key={i}
+              className="px-3 py-1 bg-gray-700 text-amber-300 rounded-full text-xs"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <p className="text-gray-300 mb-6">{proyecto.description}</p>
+
+        <div className="flex gap-3">
+          <Link
+            href={proyecto.demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-sm font-medium transition-colors"
+          >
+            Ver Demo
+          </Link>
+          <Link
+            href={proyecto.codeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 bg-transparent border border-gray-600 hover:border-sky-400 text-white rounded-lg text-sm font-medium transition-colors"
+          >
+            Ver Código
+          </Link>
+        </div>
+      </div>
+    </motion.div>
   );
 };
 
