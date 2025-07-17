@@ -5,11 +5,11 @@ import "./globals.css";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es" suppressHydrationWarning className="scroll-smooth">
+    <html lang="es" suppressHydrationWarning className="dark scroll-smooth">
       <body className={`
-        bg-gray-100 text-gray-900  // Clases base (light)
-        dark:bg-gray-900 dark:text-white  // Clases dark
-        transition-colors duration-200  // Transición global
+        bg-gray-100 text-gray-900  // Modo claro
+        dark:bg-gray-900 dark:text-white  // Modo oscuro
+        transition-colors duration-300
         min-h-screen
       `}>
         <Providers>
