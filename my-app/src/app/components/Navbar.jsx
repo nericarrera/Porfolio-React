@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
@@ -8,6 +8,8 @@ import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
   const navItems = [
     { href: "#formacion", label: "Formación" },
     { href: "#skills", label: "Skills" },
@@ -15,6 +17,10 @@ const Navbar = () => {
     { href: "#cv", label: "CV" },
     { href: "#contacto", label: "Contacto" },
   ];
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <nav className="fixed top-0 w-full z-50 backdrop-blur-sm bg-white/20 dark:bg-black/20 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
@@ -38,32 +44,38 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
+
+          <div className="flex items-center gap-4">
+            {/* Botón de tema */}
             <button
-        onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-        className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-amber-300 transition-colors duration-300"
-        aria-label="Toggle theme"
-      >
-        {resolvedTheme === 'dark' ? (
-          <SunIcon className="h-5 w-5" />
-        ) : (
-          <MoonIcon className="h-5 w-5" />
-        )}
-      </button>
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-amber-300 transition-colors duration-300"
+              aria-label="Toggle theme"
+              disabled={!mounted}
+            >
+              {!mounted ? (
+                <span className="h-5 w-5 block" />
+              ) : theme === 'dark' ? (
+                <SunIcon className="h-5 w-5" />
+              ) : (
+                <MoonIcon className="h-5 w-5" />
+              )}
+            </button>
 
-          {/* Botón hamburguesa */}
-          <button
-            className="md:hidden text-white text-2xl"
-            onClick={() => setIsMenuOpen(true)}
-            aria-label="Abrir menú"
-          >
-            ☰
-          </button>
+            {/* Botón hamburguesa */}
+            <button
+              className="md:hidden text-white text-2xl"
+              onClick={() => setIsMenuOpen(true)}
+              aria-label="Abrir menú"
+            >
+              ☰
+            </button>
+          </div>
 
-          {/* Modal móvil con animación */}
+          {/* Modal móvil */}
           <AnimatePresence>
             {isMenuOpen && (
               <div className="fixed inset-0 z-50">
-                {/* Fondo oscuro */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -72,7 +84,6 @@ const Navbar = () => {
                   onClick={() => setIsMenuOpen(false)}
                 ></motion.div>
 
-                {/* Panel lateral */}
                 <motion.div
                   initial={{ x: "100%" }}
                   animate={{ x: 0 }}
@@ -80,9 +91,7 @@ const Navbar = () => {
                   transition={{ type: "tween", ease: "easeInOut" }}
                   className="absolute right-0 top-0 h-full w-3/4 bg-black border-l border-gray-800"
                 >
-                  {/* Contenedor principal (mismo padding para X y menú) */}
                   <div className="p-1 h-full flex flex-col">
-                    {/* Botón X (alineado a la derecha pero con mismo ancho que el menú) */}
                     <div className="w-full flex justify-end pr-4 p-4">
                       <button
                         className="text-white text-2xl hover:text-sky-700 transition-colors"
@@ -93,7 +102,6 @@ const Navbar = () => {
                       </button>
                     </div>
 
-                    {/* Lista de enlaces (mismo ancho que la X) */}
                     <ul className="bg-black hover:text-sky-700 w-auto flex flex-col gap-4 mt-0 p-9 rounded-b-lg">
                       {navItems.map((item) => (
                         <li key={item.href}>

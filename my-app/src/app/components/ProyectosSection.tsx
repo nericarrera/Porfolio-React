@@ -6,11 +6,11 @@ const ProyectosSection = () => {
   const proyectos = [
     {
       id: 1,
-      title: "Portafolio Personal",
-      description: "Diseño moderno con Next.js y Tailwind CSS, incluyendo modo oscuro y animaciones.",
-      technologies: ["React", "Next.js", "Tailwind CSS", "Framer Motion"],
+      title: "Proyecto NO-CODE",
+      description: "Diseño moderno con React + vite y Tailwind CSS",
+      technologies: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
       image: "/proyecto-portafolio.jpg",
-      demoUrl: "#",
+      demoUrl: "https://github.com/nericarrera/NO-CODE---Grupo",
       codeUrl: "#"
     },
     {
