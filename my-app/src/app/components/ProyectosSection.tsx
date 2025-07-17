@@ -23,7 +23,7 @@ const ProyectosSection = () => {
     {
       id: 2,
       title: "Daysport E-commerce- (Migrando a React)",
-      description: "Tienda online con carrito de compras, con filtro dinamico, variedad en prendas y accesorios. En desarrollo.",
+      description: "Tienda online con carrito de compras, con filtro dinamico, variedad en prendas y accesorios. (En desarrollo).",
       technologies: ["HTML", "CSS", "Javascript", "React", "Node.js", "Next.js", "Typescript", "Tailwind CSS", "Framer Motion", "Responsive"],
       images: [
         "/daysport-1.png",
@@ -37,12 +37,11 @@ const ProyectosSection = () => {
     {
       id: 3,
       title: "Las Bravas E-commerce (Migrando a React)",
-      description: "Tienda online, con carrito de compras, con filtro dinamico. En desarrollo.",
+      description: "Tienda online, con carrito de compras, con filtro dinamico. (En desarrollo).",
       technologies: ["React", "Next.js", "tailwind CSS", "Framer Motion", "Responsive"],
       images: [
-        "/proyecto-tareas.jpg",
-        "/tareas-2.jpg", // Agrega más imágenes
-        "/tareas-3.jpg"
+        "/lasbravas-1.png",
+        "/lasbravas-2.png",
       ],
       demoUrl: "#",
       codeUrl: "#"
