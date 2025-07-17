@@ -1,17 +1,18 @@
 'use client';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const ProyectosSection = () => {
   const proyectos = [
     {
       id: 1,
       title: "Proyecto NO-CODE",
-      description: "Diseño moderno con React + vite y Tailwind CSS",
+      description: "Diseño moderno con React + Vite y Tailwind CSS",
       technologies: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
-      image: "/proyecto-portafolio.jpg",
+      image: "", // Asegúrate de tener esta imagen en tu carpeta public
       demoUrl: "https://github.com/nericarrera/NO-CODE---Grupo",
-      codeUrl: "#"
+      codeUrl: "https://github.com/nericarrera/NO-CODE---Grupo" // Agregado el enlace real
     },
     {
       id: 2,
@@ -64,19 +65,22 @@ const ProyectosSection = () => {
               key={proyecto.id}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              whileHover={{ y: -10 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group relative overflow-hidden rounded-xl bg-gray-800 border border-gray-700 hover:border-amber-400/30 transition-all"
+              className="relative overflow-hidden rounded-xl bg-gray-800 border border-gray-700"
             >
-              {/* Imagen del proyecto */}
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={proyecto.image}
-                  alt={proyecto.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
+              {/* Imagen del proyecto con enlace */}
+              <Link href={proyecto.demoUrl} target="_blank" rel="noopener noreferrer">
+                <div className="h-48 overflow-hidden relative">
+                  <Image
+                    src={proyecto.image}
+                    alt={proyecto.title}
+                    fill
+                    className="object-cover"
+                    quality={80}
+                  />
+                </div>
+              </Link>
 
               {/* Contenido */}
               <div className="p-6">
@@ -94,42 +98,34 @@ const ProyectosSection = () => {
                   ))}
                 </div>
 
-                {/* Descripción (visible siempre) */}
+                {/* Descripción */}
                 <p className="text-gray-300 mb-6">{proyecto.description}</p>
 
                 {/* Botones */}
                 <div className="flex gap-3">
                   <Link
                     href={proyecto.demoUrl}
-                    className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-sm font-medium transition-colors"
                   >
                     Ver Demo
                   </Link>
                   <Link
                     href={proyecto.codeUrl}
-                    className="px-4 py-2 bg-transparent border border-gray-600 hover:border-amber-400 text-white rounded-lg text-sm font-medium transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-transparent border border-gray-600 hover:border-sky-400 text-white rounded-lg text-sm font-medium transition-colors"
                   >
-                    Código
+                    Ver Código
                   </Link>
-                </div>
-              </div>
-
-              {/* Efecto hover (opcional) */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                <div className="translate-y-4 group-hover:translate-y-0 transition-transform">
-                  <p className="text-white mb-4">Más detalles:</p>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• Responsive design</li>
-                    <li>• Optimización SEO</li>
-                    <li>• Despliegue en Vercel</li>
-                  </ul>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Botón para más proyectos (opcional) */}
+        {/* Botón para más proyectos */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -138,8 +134,8 @@ const ProyectosSection = () => {
           className="text-center mt-16"
         >
           <Link
-            href="#"
-            className="inline-flex items-center px-6 py-3 border border-amber-400 text-amber-400 hover:bg-amber-400/10 rounded-lg transition-colors"
+            href="#proyectos"
+            className="inline-flex items-center px-6 py-3 border border-sky-500 text-sky-500 hover:bg-sky-500/10 rounded-lg transition-colors"
           >
             Ver todos mis proyectos
             <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
-
+  
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    return <>{children}</>;
+    return <div className="min-h-screen">{children}</div>;
   }
 
   return (
@@ -18,7 +18,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       attribute="class" 
       defaultTheme="dark"
       enableSystem={false}
-      storageKey="portfolio-theme"
+      disableTransitionOnChange
     >
       {children}
     </NextThemesProvider>

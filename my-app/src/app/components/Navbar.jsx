@@ -22,6 +22,20 @@ const Navbar = () => {
     setMounted(true);
   }, []);
 
+  if (!mounted) {
+    return (
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-sm bg-white/20 dark:bg-black/20 border-b border-gray-200 dark:border-gray-800 h-16">
+        {/* Placeholder solo para SSR */}
+        <div className="container mx-auto px-4 h-full flex items-center justify-between">
+          <div className="text-2xl font-bold text-white">
+            <span className="text-sky-700">{"</>"}</span>Developer
+          </div>
+          <div className="h-9 w-9"></div> {/* Espacio para el botón de tema */}
+        </div>
+      </nav>
+    );
+  }
+
   return (
     <nav className="fixed top-0 w-full z-50 backdrop-blur-sm bg-white/20 dark:bg-black/20 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
       <div className="container mx-auto px-4">
@@ -51,11 +65,8 @@ const Navbar = () => {
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-amber-300 transition-colors duration-300"
               aria-label="Toggle theme"
-              disabled={!mounted}
             >
-              {!mounted ? (
-                <span className="h-5 w-5 block" />
-              ) : theme === 'dark' ? (
+              {theme === 'dark' ? (
                 <SunIcon className="h-5 w-5" />
               ) : (
                 <MoonIcon className="h-5 w-5" />
@@ -76,6 +87,7 @@ const Navbar = () => {
           <AnimatePresence>
             {isMenuOpen && (
               <div className="fixed inset-0 z-50">
+                {/* Fondo oscuro */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -84,6 +96,7 @@ const Navbar = () => {
                   onClick={() => setIsMenuOpen(false)}
                 ></motion.div>
 
+                {/* Panel lateral */}
                 <motion.div
                   initial={{ x: "100%" }}
                   animate={{ x: 0 }}
@@ -91,8 +104,9 @@ const Navbar = () => {
                   transition={{ type: "tween", ease: "easeInOut" }}
                   className="absolute right-0 top-0 h-full w-3/4 bg-black border-l border-gray-800"
                 >
-                  <div className="p-1 h-full flex flex-col">
-                    <div className="w-full flex justify-end pr-4 p-4">
+                  <div className="h-full flex flex-col">
+                    {/* Cabecera con botón de cerrar */}
+                    <div className="flex justify-end p-4">
                       <button
                         className="text-white text-2xl hover:text-sky-700 transition-colors"
                         onClick={() => setIsMenuOpen(false)}
@@ -102,17 +116,24 @@ const Navbar = () => {
                       </button>
                     </div>
 
-                    <ul className="bg-black hover:text-sky-700 w-auto flex flex-col gap-4 mt-0 p-9 rounded-b-lg">
+                    {/* Lista de enlaces */}
+                    <ul className="flex-1 flex flex-col items-center justify-center gap-6 px-4 pb-8">
                       {navItems.map((item) => (
-                        <li key={item.href}>
+                        <motion.li 
+                          key={item.href}
+                          initial={{ x: 20, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ duration: 0.3 }}
+                          className="w-full text-center"
+                        >
                           <Link
                             href={item.href}
-                            className="block py-3 px-4 text-white hover:bg-gray-800 hover:text-sky-700 rounded-md transition-colors font-medium"
+                            className="block py-3 px-6 text-white hover:bg-gray-800 hover:text-sky-700 rounded-md transition-colors font-medium text-lg"
                             onClick={() => setIsMenuOpen(false)}
                           >
                             {item.label}
                           </Link>
-                        </li>
+                        </motion.li>
                       ))}
                     </ul>
                   </div>
