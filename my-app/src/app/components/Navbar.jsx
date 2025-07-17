@@ -1,14 +1,10 @@
 'use client';
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const { resolvedTheme, setTheme } = useTheme();
   
   const navItems = [
     { href: "#formacion", label: "Formación" },
@@ -18,29 +14,12 @@ const Navbar = () => {
     { href: "#contacto", label: "Contacto" },
   ];
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <nav className="fixed top-0 w-full z-50 backdrop-blur-sm bg-white/20 dark:bg-black/20 border-b border-gray-200 dark:border-gray-800 h-16">
-        <div className="container mx-auto px-4 h-full flex items-center justify-between">
-          <div className="text-2xl font-bold text-white">
-            <span className="text-sky-700">{"</>"}</span>Developer
-          </div>
-          <div className="h-9 w-9"></div>
-        </div>
-      </nav>
-    );
-  }
-
   return (
-    <nav className="fixed top-0 w-full z-50 backdrop-blur-sm bg-white/20 dark:bg-black/20 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+    <nav className="fixed top-0 w-full z-50 backdrop-blur-sm bg-white/20 border-b border-gray-200">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link href="#" className="text-2xl font-bold text-white">
+          <Link href="#" className="text-2xl font-bold text-gray-900">
             <span className="text-sky-700">{"</>"}</span>Developer
           </Link>
 
@@ -50,7 +29,7 @@ const Navbar = () => {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-white hover:text-sky-700 transition-colors font-medium"
+                  className="text-gray-900 hover:text-sky-700 transition-colors font-medium"
                 >
                   {item.label}
                 </Link>
@@ -58,22 +37,9 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* Botón de tema */}
-          <button
-            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-amber-300 transition-colors duration-300"
-            aria-label="Toggle theme"
-          >
-            {resolvedTheme === 'dark' ? (
-              <SunIcon className="h-5 w-5" />
-            ) : (
-              <MoonIcon className="h-5 w-5" />
-            )}
-          </button>
-
           {/* Botón hamburguesa */}
           <button
-            className="md:hidden text-white text-2xl"
+            className="md:hidden text-gray-900 text-2xl"
             onClick={() => setIsMenuOpen(true)}
             aria-label="Abrir menú"
           >
@@ -99,14 +65,14 @@ const Navbar = () => {
                   animate={{ x: 0 }}
                   exit={{ x: "100%" }}
                   transition={{ type: "tween", ease: "easeInOut" }}
-                  className="absolute right-0 top-0 h-full w-3/4 bg-black border-l border-gray-800"
+                  className="absolute right-0 top-0 h-full w-3/4 bg-white border-l border-gray-200"
                 >
                   {/* Contenedor principal */}
                   <div className="p-1 h-full flex flex-col">
                     {/* Botón X */}
                     <div className="w-full flex justify-end pr-4 p-4">
                       <button
-                        className="text-white text-2xl hover:text-sky-700 transition-colors"
+                        className="text-gray-900 text-2xl hover:text-sky-700 transition-colors"
                         onClick={() => setIsMenuOpen(false)}
                         aria-label="Cerrar menú"
                       >
@@ -115,7 +81,7 @@ const Navbar = () => {
                     </div>
 
                     {/* Lista de enlaces */}
-                    <ul className="bg-black hover:text-sky-700 w-auto flex flex-col gap-4 mt-0 p-9 rounded-b-lg">
+                    <ul className="w-auto flex flex-col gap-4 mt-0 p-9 rounded-b-lg">
                       {navItems.map((item) => (
                         <motion.li 
                           key={item.href}
@@ -126,7 +92,7 @@ const Navbar = () => {
                         >
                           <Link
                             href={item.href}
-                            className="block py-3 px-6 text-white hover:bg-gray-800 hover:text-sky-700 rounded-md transition-colors font-medium text-lg"
+                            className="block py-3 px-6 text-gray-900 hover:bg-gray-100 hover:text-sky-700 rounded-md transition-colors font-medium text-lg"
                             onClick={() => setIsMenuOpen(false)}
                           >
                             {item.label}

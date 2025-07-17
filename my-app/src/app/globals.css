@@ -3,7 +3,6 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-   color-scheme: light dark;
 }
 
 @theme inline {
@@ -38,9 +37,4 @@ p-4 {
   animation: pulse 4s infinite;
 }
 
-::-webkit-scrollbar {
-  @apply w-2;
-}
-::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
-}
+
