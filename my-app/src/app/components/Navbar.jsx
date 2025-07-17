@@ -1,13 +1,44 @@
 'use client';
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
+const ThemeToggle = () => {
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <button 
+        className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-amber-300 transition-colors duration-300 h-9 w-9"
+        aria-label="Toggle theme"
+      />
+    );
+  }
+
+  return (
+    <button
+      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+      className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-amber-300 transition-colors duration-300"
+      aria-label="Toggle theme"
+    >
+      {resolvedTheme === 'dark' ? (
+        <SunIcon className="h-5 w-5" />
+      ) : (
+        <MoonIcon className="h-5 w-5" />
+      )}
+    </button>
+  );
+};
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
   const navItems = [
     { href: "#formacion", label: "Formación" },
     { href: "#skills", label: "Skills" },
@@ -38,26 +69,19 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-            <button
-        onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-        className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-amber-300 transition-colors duration-300"
-        aria-label="Toggle theme"
-      >
-        {resolvedTheme === 'dark' ? (
-          <SunIcon className="h-5 w-5" />
-        ) : (
-          <MoonIcon className="h-5 w-5" />
-        )}
-      </button>
 
-          {/* Botón hamburguesa */}
-          <button
-            className="md:hidden text-white text-2xl"
-            onClick={() => setIsMenuOpen(true)}
-            aria-label="Abrir menú"
-          >
-            ☰
-          </button>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            
+            {/* Botón hamburguesa */}
+            <button
+              className="md:hidden text-white text-2xl"
+              onClick={() => setIsMenuOpen(true)}
+              aria-label="Abrir menú"
+            >
+              ☰
+            </button>
+          </div>
 
           {/* Modal móvil con animación */}
           <AnimatePresence>
@@ -80,9 +104,9 @@ const Navbar = () => {
                   transition={{ type: "tween", ease: "easeInOut" }}
                   className="absolute right-0 top-0 h-full w-3/4 bg-black border-l border-gray-800"
                 >
-                  {/* Contenedor principal (mismo padding para X y menú) */}
+                  {/* Contenedor principal */}
                   <div className="p-1 h-full flex flex-col">
-                    {/* Botón X (alineado a la derecha pero con mismo ancho que el menú) */}
+                    {/* Botón X */}
                     <div className="w-full flex justify-end pr-4 p-4">
                       <button
                         className="text-white text-2xl hover:text-sky-700 transition-colors"
@@ -93,7 +117,7 @@ const Navbar = () => {
                       </button>
                     </div>
 
-                    {/* Lista de enlaces (mismo ancho que la X) */}
+                    {/* Lista de enlaces */}
                     <ul className="bg-black hover:text-sky-700 w-auto flex flex-col gap-4 mt-0 p-9 rounded-b-lg">
                       {navItems.map((item) => (
                         <li key={item.href}>
