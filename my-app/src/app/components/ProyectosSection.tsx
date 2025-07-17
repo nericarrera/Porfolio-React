@@ -10,8 +10,8 @@ const ProyectosSection = () => {
     {
       id: 1,
       title: "Proyecto NO-CODE",
-      description: "Diseño moderno con React + Vite y Tailwind CSS",
-      technologies: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
+      description: "Login para proyecto de No-Code, Formulario para agregar usuario y revalidar contraseña. Diseño moderno con React + Vite y Tailwind CSS",
+      technologies: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Responsive"],
       images: [
         "/no-code-login.png",
         "/no-code-formulario.png", // Agrega más imágenes
@@ -22,22 +22,23 @@ const ProyectosSection = () => {
     },
     {
       id: 2,
-      title: "E-commerce",
-      description: "Tienda online con carrito de compras, autenticación y pasarela de pagos.",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+      title: "Daysport E-commerce- (Migrando a React)",
+      description: "Tienda online con carrito de compras, con filtro dinamico, variedad en prendas y accesorios.",
+      technologies: ["HTML", "CSS", "Javascript", "React", "Node.js", "Next.js", "Typescript", "Tailwind CSS", "Framer Motion", "Responsive"],
       images: [
-        "/proyecto-ecommerce.jpg",
-        "/ecommerce-2.jpg", // Agrega más imágenes
-        "/ecommerce-3.jpg"
+        "/daysport-1.png",
+        "/daysport-2.png", // Agrega más imágenes
+        "/daysport-3.png",
+        "/daysport-4.png"
       ],
-      demoUrl: "#",
-      codeUrl: "#"
+      demoUrl: "https://nericarrera.github.io/web-en-desarrollo-daysport.github.io/",
+      codeUrl: "https://nericarrera.github.io/web-en-desarrollo-daysport.github.io/"
     },
     {
       id: 3,
-      title: "App de Tareas",
-      description: "Organizador de tareas con drag & drop, notificaciones y sincronización en la nube.",
-      technologies: ["React", "Firebase", "Redux"],
+      title: "Las Bravas E-commerce (Migrando a React)",
+      description: "Tienda online, con carrito de compras, con filtro dinamico.",
+      technologies: ["React", "Next.js", "tailwind CSS", "Framer Motion", "Responsive"],
       images: [
         "/proyecto-tareas.jpg",
         "/tareas-2.jpg", // Agrega más imágenes
