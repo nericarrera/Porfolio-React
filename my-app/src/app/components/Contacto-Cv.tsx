@@ -165,8 +165,8 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-white mb-2">Contacto Directo</h4>
-                  <p className="text-gray-400 mb-2">Email: neri.carrera@ejemplo.com</p>
-                  <p className="text-gray-400 mb-4">Teléfono: +54 11 1234-5678</p>
+                  <p className="text-gray-400 mb-2">Email: devnericarrera@gmail.com</p>
+                  <p className="text-gray-400 mb-4">Teléfono: +54 11 2176-4065</p>
                   <div className="flex gap-4">
                     <a href="#" className="text-gray-400 hover:text-sky-500 transition-colors">
                       <span className="sr-only">LinkedIn</span>
