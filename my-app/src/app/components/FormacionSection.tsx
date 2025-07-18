@@ -85,7 +85,7 @@ const FormacionSection = () => {
                 </div>
 
                 {/* Punto central (solo en desktop) */}
-                <div className="hidden md:flex items-center justify-center w-16 h-16 bg-gray-700 border-4 border-sky-300 rounded-full z-10">
+                <div className="hidden md:flex items-center justify-center w-16 h-16 bg-gray-300 border-4 border-sky-300 rounded-full z-10">
                   <span className="text-xl">{index + 1}</span>
                 </div>
 
