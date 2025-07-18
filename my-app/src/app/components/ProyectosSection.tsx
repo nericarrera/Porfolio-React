@@ -5,6 +5,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
+interface Proyecto {
+  title: string;
+  description: string;
+  images: string[];
+  technologies: string[];
+  githubUrl?: string;
+  demoUrl: string;
+  codeUrl: string;
+}
+
+interface ProjectCardProps {
+  proyecto: Proyecto;
+  index: number;
+}
+
 const ProyectosSection = () => {
   const proyectos = [
     {
@@ -102,7 +117,7 @@ const ProyectosSection = () => {
   );
 };
 
-const ProjectCard = ({ proyecto, index }) => {
+const ProjectCard = ({ proyecto, index }: ProjectCardProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const nextImage = () => {
