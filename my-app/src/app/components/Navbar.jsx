@@ -70,7 +70,7 @@ const Navbar = () => {
                   className="absolute right-0 top-0 h-full w-full max-w-sm"
                 >
                   {/* Fondo de vidrio */}
-                  <div className="absolute inset-0 bg-gray-800/80 border-l border-white/10" />
+                  <div className="absolute inset-0 bg-gray-800 border-l border-white/10" />
                   
                   {/* Contenido del menú */}
                   <div className="relative h-full flex flex-col">
@@ -89,7 +89,7 @@ const Navbar = () => {
                     </div>
 
                     {/* Lista de enlaces */}
-                    <ul className="flex-1 p-6 overflow-y-auto">
+                    <ul className="flex-1 p-1 bg-black/100">
                       {navItems.map((item, index) => (
                         <motion.li 
                           key={item.href}
@@ -116,7 +116,7 @@ const Navbar = () => {
                     </ul>
 
                     {/* Footer del menú */}
-                    <div className="p-6 border-t border-white/10">
+                    <div className="p-6 border-t border-white/10 bg-black/100">
                       <div className="flex justify-center space-x-6">
                         <a href="#" className="text-white hover:text-sky-400 transition-colors">
                           <span className="sr-only">LinkedIn</span>
