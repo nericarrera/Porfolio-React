@@ -55,7 +55,7 @@ const ContactForm = () => {
       className="py-16 px-4 sm:px-6 lg:px-8 bg-neutral-950"
     >
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-neutral-50 dark:text-white mb-12">
+        <h2 className="text-4xl font-bold text-center text-neutral-50 dark:text-white mb-12">
           Contacto
         </h2>
         
@@ -107,7 +107,7 @@ const ContactForm = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full px-3 py-2 border text-neutral-50 border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 dark:bg-gray-800 dark:text-white"
               />
             </div>
 
