@@ -59,7 +59,6 @@ const ContactForm = () => {
             ref={formRef}
             onSubmit={handleSubmit}
             className="space-y-6"
-            whileHover={{ scale: 1.01 }}
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
