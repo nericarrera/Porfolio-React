@@ -23,24 +23,57 @@ const ContactForm = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
+    // Verificación de variables de entorno
+    if (!process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 
+        !process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 
+        !process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY) {
+      console.error('Error: Faltan variables de entorno de EmailJS');
+      setSubmitStatus({ 
+        success: false, 
+        message: 'Error de configuración. Por favor contacta al administrador.' 
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      await emailjs.sendForm(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+      console.log('Enviando formulario con datos:', formData);
+      
+      const result = await emailjs.sendForm(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
         formRef.current!,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
       );
 
-      setSubmitStatus({ success: true, message: '¡Mensaje enviado con éxito! Pronto me pondré en contacto.' });
-      setFormData({ name: '', email: '', message: '' });
-    } catch (error: unknown) {
+      console.log('EmailJS response:', result);
+      
+      if (result.status === 200) {
+        setSubmitStatus({ 
+          success: true, 
+          message: '¡Mensaje enviado con éxito! Pronto me pondré en contacto.' 
+        });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        throw new Error(`Estado inesperado: ${result.status}`);
+      }
+    } catch (error: any) {
+      console.error('Error completo:', {
+        message: error.message,
+        text: error.text,
+        status: error.status
+      });
+      
       let errorMessage = 'Error al enviar el mensaje. Por favor inténtalo nuevamente.';
       
-      if (error instanceof Error) {
-        errorMessage = error.message || errorMessage;
+      if (error.text) {
+        errorMessage += ` (${error.text})`;
       }
       
-      setSubmitStatus({ success: false, message: errorMessage });
+      setSubmitStatus({ 
+        success: false, 
+        message: errorMessage 
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -55,12 +88,11 @@ const ContactForm = () => {
       className="py-16 px-4 sm:px-6 lg:px-8 bg-neutral-950"
     >
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl font-bold text-center text-neutral-50 dark:text-white mb-12">
+        <h2 className="text-4xl font-bold text-center text-neutral-50 mb-12">
           Contacto
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Formulario */}
           <motion.form
             ref={formRef}
             onSubmit={handleSubmit}
@@ -77,7 +109,7 @@ const ContactForm = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 dark:bg-gray-800 text-white"
+                className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 bg-gray-800 text-white"
               />
             </div>
 
@@ -92,7 +124,7 @@ const ContactForm = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 dark:bg-gray-800 text-white"
+                className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 bg-gray-800 text-white"
               />
             </div>
 
@@ -107,7 +139,7 @@ const ContactForm = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full px-3 py-2 border text-neutral-50 border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 bg-gray-800 text-white"
               />
             </div>
 
@@ -115,23 +147,30 @@ const ContactForm = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-3 bg-sky-600 text-white font-medium rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
+                {isSubmitting ? (
+                  <span className="flex items-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Enviando...
+                  </span>
+                ) : 'Enviar Mensaje'}
               </button>
 
-              {/* Botón para descargar CV */}
               <a
                 href="/cv-2025-nericarrera.pdf"
                 download="CV_Neri_Carrera.pdf"
-                className="px-6 py-3 border border-sky-600 text-sky-600 dark:text-sky-400 dark:border-sky-400 font-medium rounded-md hover:bg-sky-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-colors"
+                className="px-6 py-3 border border-sky-600 text-sky-400 hover:bg-gray-800 font-medium rounded-md transition-colors"
               >
                 Descargar CV
               </a>
             </div>
 
             {submitStatus && (
-              <div className={`mt-4 p-3 rounded-md ${submitStatus.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+              <div className={`mt-4 p-3 rounded-md ${submitStatus.success ? 'bg-green-500/10 border border-green-500 text-green-500' : 'bg-red-500/10 border border-red-500 text-red-500'}`}>
                 {submitStatus.message}
               </div>
             )}
