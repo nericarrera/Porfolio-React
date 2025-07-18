@@ -33,8 +33,14 @@ const ContactForm = () => {
 
       setSubmitStatus({ success: true, message: '¡Mensaje enviado con éxito! Pronto me pondré en contacto.' });
       setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      setSubmitStatus({ success: false, message: 'Error al enviar el mensaje. Por favor inténtalo nuevamente.' });
+    } catch (error: unknown) {
+      let errorMessage = 'Error al enviar el mensaje. Por favor inténtalo nuevamente.';
+      
+      if (error instanceof Error) {
+        errorMessage = error.message || errorMessage;
+      }
+      
+      setSubmitStatus({ success: false, message: errorMessage });
     } finally {
       setIsSubmitting(false);
     }
@@ -46,7 +52,7 @@ const ContactForm = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900"
+      className="py-16 px-4 sm:px-6 lg:px-8 bg-neutral-950"
     >
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
@@ -116,8 +122,8 @@ const ContactForm = () => {
 
               {/* Botón para descargar CV */}
               <a
-                href="/cv.pdf"
-                download="TuNombre_CV.pdf"
+                href="/cv-2025-nericarrera.pdf"
+                download="CV_Neri_Carrera.pdf"
                 className="px-6 py-3 border border-sky-600 text-sky-600 dark:text-sky-400 dark:border-sky-400 font-medium rounded-md hover:bg-sky-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-colors"
               >
                 Descargar CV

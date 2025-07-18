@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { ChangeEvent, FormEvent } from 'react';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -12,26 +12,25 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const { name, value } = e.target;
+  setFormData(prev => ({ ...prev, [name]: value }));
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulación de envío (reemplaza con tu API o servicio de emails)
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setSubmitSuccess(true);
-      setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      console.error('Error al enviar:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+const handleSubmit = async (e: FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  
+  try {
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setSubmitSuccess(true);
+    setFormData({ name: '', email: '', message: '' });
+  } catch (error) {
+    console.error('Error al enviar:', error);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <section id="contacto" className="py-20 px-4 bg-neutral-950">
@@ -145,7 +144,7 @@ const ContactSection = () => {
                   <h4 className="text-xl font-semibold text-white mb-2">Descargar CV</h4>
                   <p className="text-gray-400 mb-4">Descarga mi CV actualizado en formato PDF.</p>
                   <a
-                    href="/cv.pdf" // Reemplaza con la ruta real a tu CV
+                    href="/cv-2025-nericarrera.pdf" 
                     download="CV_Neri_Carrera.pdf"
                     className="inline-flex items-center px-5 py-2.5 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
                   >
