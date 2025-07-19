@@ -29,18 +29,42 @@ const ContactForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(null);
+  const [envReady, setEnvReady] = useState(false);
 
-  // Efecto de debug mejorado
+  // Configuración de EmailJS - SOLUCIÓN DEFINITIVA
+  const emailjsConfig = {
+    serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_j7bl088',
+    templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_lajq5pf',
+    publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'c4RzGdQrv6giscvHA'
+  };
+
+  // Efecto de verificación de entorno
   useEffect(() => {
-  console.log('Variables de entorno en cliente:', {
-    serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'No definido',
-    templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'No definido',
-    publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY 
-      ? '***' + process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY.slice(-3) 
-      : 'No definido',
-    nodeEnv: process.env.NODE_ENV
-  });
-}, []);
+    const checkEnv = () => {
+      const allEnvSet = emailjsConfig.serviceId && 
+                       emailjsConfig.templateId && 
+                       emailjsConfig.publicKey;
+      
+      console.log('Configuración EmailJS:', {
+        serviceId: emailjsConfig.serviceId ? '***' + emailjsConfig.serviceId.slice(-4) : 'No definido',
+        templateId: emailjsConfig.templateId ? '***' + emailjsConfig.templateId.slice(-4) : 'No definido',
+        publicKey: emailjsConfig.publicKey ? '***' + emailjsConfig.publicKey.slice(-4) : 'No definido',
+        envSource: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ? 'Vercel' : 'Hardcoded'
+      });
+
+      if (!allEnvSet) {
+        console.warn('Advertencia: Se están usando valores hardcodeados para EmailJS');
+        setSubmitStatus({
+          success: false,
+          message: 'Modo desarrollo: Usando configuración local'
+        });
+      }
+      
+      setEnvReady(true);
+    };
+
+    checkEnv();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -50,6 +74,14 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!envReady) {
+      setSubmitStatus({
+        success: false,
+        message: 'El formulario aún no está listo. Por favor espera...'
+      });
+      return;
+    }
+
     // Validación de campos vacíos
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setSubmitStatus({ 
@@ -73,27 +105,22 @@ const ContactForm = () => {
     setSubmitStatus(null);
 
     try {
-      console.log('Enviando formulario con datos:', formData);
+      console.log('Enviando formulario con datos:', {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message.substring(0, 20) + '...' // Log parcial por seguridad
+      });
       
-      // Verificación de variables de entorno
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-
-      if (!serviceId || !templateId || !publicKey) {
-        throw new Error('Faltan variables de entorno de EmailJS');
-      }
-
       const result = await emailjs.sendForm(
-        serviceId,
-        templateId,
+        emailjsConfig.serviceId,
+        emailjsConfig.templateId,
         formRef.current,
-        publicKey
+        emailjsConfig.publicKey
       );
 
       console.log('Respuesta de EmailJS:', {
         status: result.status,
-        text: result.text
+        text: result.text.substring(0, 50) + '...'
       });
       
       if (result.status === 200) {
@@ -116,7 +143,7 @@ const ContactForm = () => {
         const emailJsError = error as EmailJSError;
         
         if (emailJsError.text) {
-          errorMessage += ` (${emailJsError.text})`;
+          errorMessage += ` (${emailJsError.text.substring(0, 50)}...)`;
         } else if (emailJsError.message) {
           errorMessage = emailJsError.message;
         }
@@ -202,7 +229,7 @@ const ContactForm = () => {
             <div className="flex items-center justify-between">
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !envReady}
                 className="px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
@@ -228,6 +255,7 @@ const ContactForm = () => {
             {submitStatus && (
               <div className={`mt-4 p-3 rounded-md ${submitStatus.success ? 'bg-green-500/10 border border-green-500 text-green-500' : 'bg-red-500/10 border border-red-500 text-red-500'}`}>
                 {submitStatus.message}
+                {!envReady && <p className="text-xs mt-1">El formulario se está configurando...</p>}
               </div>
             )}
           </motion.form>
