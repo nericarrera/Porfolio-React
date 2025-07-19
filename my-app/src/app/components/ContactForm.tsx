@@ -32,14 +32,15 @@ const ContactForm = () => {
 
   // Efecto de debug mejorado
   useEffect(() => {
-    console.log('Variables de entorno:', {
-      serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-      templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-      publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY 
-        ? '***' + process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY.slice(-3) 
-        : 'No definida'
-    });
-  }, []);
+  console.log('Variables de entorno en cliente:', {
+    serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'No definido',
+    templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'No definido',
+    publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY 
+      ? '***' + process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY.slice(-3) 
+      : 'No definido',
+    nodeEnv: process.env.NODE_ENV
+  });
+}, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
