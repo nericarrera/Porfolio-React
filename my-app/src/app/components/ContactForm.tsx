@@ -157,7 +157,7 @@ const ContactForm = () => {
               <input
                 type="text"
                 id="name"
-                name="user_name"
+                name="name"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -173,7 +173,7 @@ const ContactForm = () => {
               <input
                 type="email"
                 id="email"
-                name="user_email"
+                name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
