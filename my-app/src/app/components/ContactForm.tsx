@@ -31,21 +31,14 @@ const ContactForm = () => {
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(null);
 
   // Efecto de debug mejorado
-  useEffect(() => {
-    console.log('Debug - Variables de entorno:', {
-      serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-      templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-      publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY 
-        ? '***' + process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY.slice(-3) 
-        : 'No definida',
-      isClientSide: typeof window !== 'undefined'
-    });
-
-    // Verificación adicional del entorno
-    if (typeof window === 'undefined') {
-      console.warn('EmailJS solo puede ejecutarse en el cliente');
-    }
-  }, []);
+ useEffect(() => {
+  console.log('Variables ACTUALES:', {
+    // Versión correcta (debe coincidir con .env.local)
+    correcta: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
+    // Versión que estabas usando anteriormente (con "EmailJS")
+    incorrecta: process.env.NEXT_PUBLIC_EmailJS_PUBLIC_KEY
+  });
+}, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
