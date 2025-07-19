@@ -3,15 +3,32 @@ import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 
+type FormData = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+type SubmitStatus = {
+  success: boolean;
+  message: string;
+} | null;
+
+type EmailJSError = {
+  message?: string;
+  text?: string;
+  status?: number;
+};
+
 const ContactForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{ success: boolean; message: string } | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -55,21 +72,25 @@ const ContactForm = () => {
         });
         setFormData({ name: '', email: '', message: '' });
       } else {
-        throw new Error(`Estado inesperado: ${result.status}`);
+        throw { 
+          message: `Estado inesperado: ${result.status}`,
+          status: result.status
+        };
       }
-    } catch (error: any) {
-      console.error('Error completo:', {
-        message: error.message,
-        text: error.text,
-        status: error.status
-      });
-      
+    } catch (error: unknown) {
       let errorMessage = 'Error al enviar el mensaje. Por favor inténtalo nuevamente.';
       
-      if (error.text) {
-        errorMessage += ` (${error.text})`;
+      // Manejo seguro de tipos
+      if (typeof error === 'object' && error !== null) {
+        const emailJsError = error as EmailJSError;
+        if (emailJsError.text) {
+          errorMessage += ` (${emailJsError.text})`;
+        } else if (emailJsError.message) {
+          errorMessage = emailJsError.message;
+        }
       }
       
+      console.error('Error completo:', error);
       setSubmitStatus({ 
         success: false, 
         message: errorMessage 
@@ -109,6 +130,7 @@ const ContactForm = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
+                autoComplete="name"
                 className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 bg-gray-800 text-white"
               />
             </div>
@@ -124,6 +146,7 @@ const ContactForm = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                autoComplete="email"
                 className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 bg-gray-800 text-white"
               />
             </div>
@@ -139,6 +162,7 @@ const ContactForm = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
+                autoComplete="off"
                 className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 bg-gray-800 text-white"
               />
             </div>
