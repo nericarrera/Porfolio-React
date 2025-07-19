@@ -30,15 +30,21 @@ const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(null);
 
-  // 👇🏽 Efecto de debug para verificar variables de entorno
+  // Efecto de debug mejorado
   useEffect(() => {
-    console.log('Variables de entorno cargadas:', {
+    console.log('Debug - Variables de entorno:', {
       serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
       templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
       publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY 
         ? '***' + process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY.slice(-3) 
-        : 'No definida'
+        : 'No definida',
+      isClientSide: typeof window !== 'undefined'
     });
+
+    // Verificación adicional del entorno
+    if (typeof window === 'undefined') {
+      console.warn('EmailJS solo puede ejecutarse en el cliente');
+    }
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -48,33 +54,56 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    // Verificación de variables de entorno
-    if (!process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 
-        !process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 
-        !process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY) {
-      console.error('Error: Faltan variables de entorno de EmailJS');
+    
+    // Validación de campos vacíos
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setSubmitStatus({ 
         success: false, 
-        message: 'Error de configuración. Por favor contacta al administrador.' 
+        message: 'Por favor completa todos los campos.' 
       });
-      setIsSubmitting(false);
       return;
     }
 
+    // Verificación de referencia del formulario
+    if (!formRef.current) {
+      console.error('Error: La referencia del formulario es null');
+      setSubmitStatus({ 
+        success: false, 
+        message: 'Error técnico. Por favor recarga la página.' 
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
     try {
-      console.log('Enviando formulario con datos:', formData);
+      console.log('Enviando formulario con datos:', {
+        ...formData,
+        formElements: Array.from(formRef.current.elements).map((el: any) => ({
+          name: el.name,
+          value: el.value
+        }))
+      });
       
+      // Verificación de variables de entorno
+      if (!process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 
+          !process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 
+          !process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY) {
+        throw new Error('Faltan variables de entorno de EmailJS');
+      }
+
       const result = await emailjs.sendForm(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        formRef.current!,
+        formRef.current,
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
       );
 
-      console.log('EmailJS response:', result);
+      console.log('Respuesta de EmailJS:', {
+        status: result.status,
+        text: result.text
+      });
       
       if (result.status === 200) {
         setSubmitStatus({ 
@@ -85,15 +114,16 @@ const ContactForm = () => {
       } else {
         throw { 
           message: `Estado inesperado: ${result.status}`,
-          status: result.status
+          status: result.status,
+          text: result.text
         };
       }
     } catch (error: unknown) {
       let errorMessage = 'Error al enviar el mensaje. Por favor inténtalo nuevamente.';
       
-      // Manejo seguro de tipos
       if (typeof error === 'object' && error !== null) {
         const emailJsError = error as EmailJSError;
+        
         if (emailJsError.text) {
           errorMessage += ` (${emailJsError.text})`;
         } else if (emailJsError.message) {
@@ -137,7 +167,7 @@ const ContactForm = () => {
               <input
                 type="text"
                 id="name"
-                name="name"
+                name="user_name"  // Cambiado a user_name para coincidir con EmailJS
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -153,7 +183,7 @@ const ContactForm = () => {
               <input
                 type="email"
                 id="email"
-                name="email"
+                name="user_email"  // Cambiado a user_email para coincidir con EmailJS
                 value={formData.email}
                 onChange={handleChange}
                 required
