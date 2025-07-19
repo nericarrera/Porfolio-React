@@ -31,14 +31,15 @@ const ContactForm = () => {
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(null);
 
   // Efecto de debug mejorado
- useEffect(() => {
-  console.log('Variables ACTUALES:', {
-    // Versión correcta (debe coincidir con .env.local)
-    correcta: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
-    // Versión que estabas usando anteriormente (con "EmailJS")
-    incorrecta: process.env.NEXT_PUBLIC_EmailJS_PUBLIC_KEY
-  });
-}, []);
+  useEffect(() => {
+    console.log('Variables de entorno:', {
+      serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+      templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+      publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY 
+        ? '***' + process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY.slice(-3) 
+        : 'No definida'
+    });
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -71,26 +72,22 @@ const ContactForm = () => {
     setSubmitStatus(null);
 
     try {
-      console.log('Enviando formulario con datos:', {
-        ...formData,
-        formElements: Array.from(formRef.current.elements).map((el: any) => ({
-          name: el.name,
-          value: el.value
-        }))
-      });
+      console.log('Enviando formulario con datos:', formData);
       
       // Verificación de variables de entorno
-      if (!process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 
-          !process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 
-          !process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY) {
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
         throw new Error('Faltan variables de entorno de EmailJS');
       }
 
       const result = await emailjs.sendForm(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        serviceId,
+        templateId,
         formRef.current,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+        publicKey
       );
 
       console.log('Respuesta de EmailJS:', {
@@ -160,7 +157,7 @@ const ContactForm = () => {
               <input
                 type="text"
                 id="name"
-                name="user_name"  // Cambiado a user_name para coincidir con EmailJS
+                name="user_name"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -176,7 +173,7 @@ const ContactForm = () => {
               <input
                 type="email"
                 id="email"
-                name="user_email"  // Cambiado a user_email para coincidir con EmailJS
+                name="user_email"
                 value={formData.email}
                 onChange={handleChange}
                 required
