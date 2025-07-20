@@ -34,7 +34,7 @@ const ContactForm = () => {
   // Configuración de EmailJS - SOLUCIÓN DEFINITIVA
   const emailjsConfig = {
     serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_j7bl088',
-    templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_lajq5pf',
+    templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_qj071qh',
     publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'c4RzGdQrv6giscvHA'
   };
 
