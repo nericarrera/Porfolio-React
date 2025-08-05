@@ -30,8 +30,8 @@ const SkillsSection = () => {
     {
       category: "Herramientas",
       skills: [
-        { name: "GitHub", level: 50 },
-        { name: "Git", level: 85 },
+        { name: "GitHub", level: 60 },
+        { name: "Git", level: 50 },
         { name: "Figma", level: 20 },
         { name: "Vercel", level: 20 },
         { name: "Docker", level: 20 }
