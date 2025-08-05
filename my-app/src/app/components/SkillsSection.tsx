@@ -9,9 +9,9 @@ const SkillsSection = () => {
         { name: "HTML", level: 80 },
         { name: "CSS", level: 80 },
         { name: "JavaScript", level: 60 },
-        { name: "React", level: 60 },
-        { name: "TypeScript", level: 50 },
-        { name: "Tailwind CSS", level: 55 }
+        { name: "React", level: 50 },
+        { name: "TypeScript", level: 40 },
+        { name: "Tailwind CSS", level: 45 }
       ],
       icon: "💻"
     },
@@ -19,7 +19,7 @@ const SkillsSection = () => {
       category: "Backend",
       skills: [
         { name: "Node.js", level: 25 },
-        { name: "Next.js", level: 60 },
+        { name: "Next.js", level: 40 },
         { name: "Express", level: 15 },
         { name: "MongoDB", level: 10 },
         { name: "Firebase", level: 10 },
@@ -31,9 +31,9 @@ const SkillsSection = () => {
       category: "Herramientas",
       skills: [
         { name: "Git", level: 85 },
-        { name: "Figma", level: 30 },
-        { name: "Vercel", level: 30 },
-        { name: "Docker", level: 30 }
+        { name: "Figma", level: 20 },
+        { name: "Vercel", level: 20 },
+        { name: "Docker", level: 20 }
       ],
       icon: "🛠️"
     }
