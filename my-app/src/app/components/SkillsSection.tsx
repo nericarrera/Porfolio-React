@@ -21,8 +21,9 @@ const SkillsSection = () => {
         { name: "Node.js", level: 25 },
         { name: "Next.js", level: 60 },
         { name: "Express", level: 15 },
-        { name: "MongoDB", level: 25 },
-        { name: "Firebase", level: 10 }
+        { name: "MongoDB", level: 10 },
+        { name: "Firebase", level: 10 },
+        { name: "Sql", level: 20 }
       ],
       icon: "⚙️"
     },
