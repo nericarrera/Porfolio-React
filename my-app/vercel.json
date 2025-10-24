@@ -1,5 +1,10 @@
 {
-  "installCommand": "npm install --force",
+  "installCommand": "npm install --force --legacy-peer-deps",
   "buildCommand": "npm run build",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "functions": {
+    "**/*.js": {
+      "maxDuration": 30
+    }
+  }
 }
