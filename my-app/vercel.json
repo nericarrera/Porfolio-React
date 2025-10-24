@@ -1,4 +1,5 @@
 {
-  "buildCommand": "npm run vercel-build",
+  "installCommand": "yarn install",
+  "buildCommand": "yarn build",
   "outputDirectory": ".next"
 }

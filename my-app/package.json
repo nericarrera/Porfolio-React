@@ -5,12 +5,12 @@
   "engines": {
     "node": ">=18.x"
   },
+  "packageManager": "yarn@1.22.22",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "vercel-build": "next build"
+    "lint": "next lint"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
