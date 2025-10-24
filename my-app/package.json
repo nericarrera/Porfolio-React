@@ -9,7 +9,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel-build": "next build"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -17,7 +18,7 @@
     "@react-three/drei": "^10.5.0",
     "@react-three/fiber": "^9.2.0",
     "framer-motion": "^12.23.6",
-    "next": "^15.3.5",
+    "next": "15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "three": "^0.178.0"
@@ -32,6 +33,5 @@
     "eslint-config-next": "15.3.5",
     "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "packageManager": "npm@10.9.0"
+  }
 }
