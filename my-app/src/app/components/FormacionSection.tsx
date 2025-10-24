@@ -8,7 +8,7 @@ const FormacionSection = () => {
       title: "Aprende a Programar",
       institution: "Argentina Programa",
       year: "2022",
-      description: "Javascript, HTML, CSS, y metodologías ágiles. CERTIFICADO",
+      description: "Javascript, HTML, CSS, y metodologías ágiles. (CERTIFICADO)",
       icon: "🚀"
     },
     {
@@ -16,7 +16,7 @@ const FormacionSection = () => {
       title: "Tecnicatura Univ. en Tegnologias Web",
       institution: "Universidad Nacional del Oeste",
       year: "2025",
-      description: "análisis y desarrollo de sistemas informáticos con principal énfasis en el análisis y desarrollo de sistemas web y móviles, ya que cuenta con una capacitación en el desarrollo web y diseño gráfico, CERTIFICADO",
+      description: "análisis y desarrollo de sistemas informáticos con principal énfasis en el análisis y desarrollo de sistemas web y móviles, ya que cuenta con una capacitación en el desarrollo web y diseño gráfico, (CERTIFICADO)",
       icon: "🎓"
     },
     {
@@ -24,7 +24,7 @@ const FormacionSection = () => {
       title: "Introduccion a la Ciencia de Datos",
       institution: "Santender, Open Academy",
       year: "2025",
-      description: "Fundamentos a la utilizacion de Ciencia de Datos. CERTIFICADO",
+      description: "Fundamentos a la utilizacion de Ciencia de Datos. (CERTIFICADO)",
       icon: "⚡"
     },
     
@@ -33,7 +33,7 @@ const FormacionSection = () => {
       title: "Iniciacion al Desarrollo con IA",
       institution: "Big School",
       year: "2025",
-      description: "Fundamentos a la utilizacion de IA. CERTIFICADO",
+      description: "Fundamentos a la utilizacion de IA. (CERTIFICADO)",
       icon: "⚡"
     },
 
