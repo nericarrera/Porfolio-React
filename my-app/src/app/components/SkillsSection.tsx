@@ -9,9 +9,13 @@ const SkillsSection = () => {
         { name: "HTML", level: 80 },
         { name: "CSS", level: 80 },
         { name: "JavaScript", level: 60 },
-        { name: "React", level: 60 },
+        { name: "React", level: 70 },
         { name: "TypeScript", level: 50 },
-        { name: "Tailwind CSS", level: 50 }
+        { name: "Tailwind CSS", level: 50 },
+        { name: "Bootstrap", level: 50 },
+        { name: "Next.js", level: 50 },
+        { name: "NextAuth.js", level: 50 },
+        { name: "Cloudinary", level: 75 }
       ],
       icon: "💻"
     },
@@ -19,11 +23,15 @@ const SkillsSection = () => {
       category: "Backend",
       skills: [
         { name: "Node.js", level: 50 },
-        { name: "Next.js", level: 50 },
+        { name: "Nest.js", level: 50 },
         { name: "Express", level: 50 },
-        { name: "MongoDB", level: 25 },
-        { name: "Firebase", level: 25 },
-        { name: "PostgreSql", level: 40 }
+        { name: "Prisma ORM", level: 50 },
+        { name: "JWT (JSON Web Tokens)", level: 45 },
+        { name: "Bcrypt.js", level: 45 },
+        { name: "MongoDB", level: 35 },
+        { name: "Firebase", level: 45 },
+        { name: "PostgreSql", level: 40 },
+        { name: "Nodemailer", level: 45 },
       ],
       icon: "⚙️"
     },
@@ -33,8 +41,10 @@ const SkillsSection = () => {
         { name: "GitHub", level: 60 },
         { name: "Git", level: 50 },
         { name: "Figma", level: 20 },
-        { name: "Vercel", level: 30 },
-        { name: "Docker", level: 30 }
+        { name: "Vercel", level: 50 },
+        { name: "Railway", level: 50 },
+        { name: "Docker", level: 50 },
+        { name: "ESLint / TypeScript Build Tools", level: 60 },
       ],
       icon: "🛠️"
     }
