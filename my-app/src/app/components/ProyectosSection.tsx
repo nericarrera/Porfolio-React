@@ -37,7 +37,7 @@ const ProyectosSection = () => {
     },
     {
       id: 2,
-      title: "Daysport E-commerce- (Migrando a React)",
+      title: "Daysport E-commerce",
       description: "Tienda online con carrito de compras, con filtro dinamico, variedad en prendas y accesorios. (En desarrollo).",
       technologies: ["HTML", "CSS", "Javascript", "React", "Node.js", "Next.js", "Typescript", "Tailwind CSS", "Framer Motion", "Responsive"],
       images: [
