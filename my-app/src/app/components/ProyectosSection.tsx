@@ -44,23 +44,15 @@ const ProyectosSection = () => {
         "/daysport-1.png",
         "/daysport-2.png", // Agrega más imágenes
         "/daysport-3.png",
-        "/daysport-4.png"
+        "/daysport-4.png",
+        "/daysport-5.png",
+        "/daysport-6.png",
+        "/daysport-7.png",
       ],
       demoUrl: "https://nericarrera.github.io/web-en-desarrollo-daysport.github.io/",
       codeUrl: "https://nericarrera.github.io/web-en-desarrollo-daysport.github.io/"
     },
-    {
-      id: 3,
-      title: "Las Bravas E-commerce (Migrando a React)",
-      description: "Tienda online, con carrito de compras, con filtro dinamico. (En desarrollo).",
-      technologies: ["React", "Next.js", "tailwind CSS", "Framer Motion", "Responsive"],
-      images: [
-        "/lasbravas-1.png",
-        "/lasbravas-2.png",
-      ],
-      demoUrl: "#",
-      codeUrl: "#"
-    }
+    
   ];
 
   return (
