@@ -32,8 +32,7 @@ const ProyectosSection = () => {
         "/no-code-formulario.png",
         "/no-code-contraseña.png"
       ],
-      demoUrl: "https://github.com/nericarrera/NO-CODE---Grupo",
-      codeUrl: "https://github.com/nericarrera/NO-CODE---Grupo"
+      codeUrl: "https://github.com/nericarrera/NO-CODE---Grupo",
     },
     {
       id: 2,
@@ -49,8 +48,22 @@ const ProyectosSection = () => {
         "/daysport-6.png",
         "/daysport-7.png"
       ],
-      demoUrl: "https://www.daysport.com.ar",
-      codeUrl: "https://www.daysport.com.ar"
+      codeUrl: "https://www.daysport.com.ar",
+    },
+    {
+      id: 3,
+      title: "Adopciones Ba E-commerce",
+      description: "Plataforma completa para conectar personas con mascotas y que puedan ser adoptadas. Autenticación de usuarios, gestión de publicaciones y notificaciones por email.",
+      technologies: ["Vite.js", "Next.js 14", "TypeScript", "NestJS", "Tailwind CSS", "Framer Motion", "Vercel", "Responsive Design"],
+      images: [
+        "/ba-1.png",
+        "/ba-2.png",
+        "/ba-3.png",
+        "/ba-4.png",
+        "/ba-5.png"      
+      ],
+
+      codeUrl: "https://ecommerce-ba-sage.vercel.app/",
     }
   ];
 
@@ -79,7 +92,7 @@ const ProyectosSection = () => {
         </motion.p>
 
         {/* Grid centrado con 2 columnas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {proyectos.map((proyecto, index) => (
             <ProjectCard key={proyecto.id} proyecto={proyecto} index={index} />
           ))}
