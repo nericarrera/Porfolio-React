@@ -27,7 +27,7 @@ const ContactForm = () => {
     name: '',
     email: '',
     message: '',
-    website: '' // Inicializamos el campo honeypot
+    website: '' 
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>(null);
@@ -41,25 +41,27 @@ const ContactForm = () => {
     publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'c4RzGdQrv6giscvHA'
   };
 
+  // Extraemos las dependencias para el useEffect
+  const { serviceId, templateId, publicKey } = emailjsConfig;
+
   // Efecto de verificación de entorno
   useEffect(() => {
     const checkEnv = () => {
-      const allEnvSet = emailjsConfig.serviceId && 
-                       emailjsConfig.templateId && 
-                       emailjsConfig.publicKey;
+      // Verificamos que todas las variables estén definidas
+      const allEnvSet = Boolean(serviceId && templateId && publicKey);
       
       console.log('Configuración EmailJS:', {
-        serviceId: emailjsConfig.serviceId ? '***' + emailjsConfig.serviceId.slice(-4) : 'No definido',
-        templateId: emailjsConfig.templateId ? '***' + emailjsConfig.templateId.slice(-4) : 'No definido',
-        publicKey: emailjsConfig.publicKey ? '***' + emailjsConfig.publicKey.slice(-4) : 'No definido',
+        serviceId: serviceId ? '***' + serviceId.slice(-4) : 'No definido',
+        templateId: templateId ? '***' + templateId.slice(-4) : 'No definido',
+        publicKey: publicKey ? '***' + publicKey.slice(-4) : 'No definido',
         envSource: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ? 'Vercel' : 'Hardcoded'
       });
 
-      setEnvReady(true);
+      setEnvReady(allEnvSet);
     };
 
     checkEnv();
-  }, []);
+  }, [serviceId, templateId, publicKey]); // 🔥 FIX 2: Agregamos las dependencias correctas
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -141,10 +143,10 @@ const ContactForm = () => {
       });
       
       const result = await emailjs.sendForm(
-        emailjsConfig.serviceId,
-        emailjsConfig.templateId,
+        serviceId, // Usamos la variable extraída
+        templateId, // Usamos la variable extraída
         formRef.current,
-        emailjsConfig.publicKey
+        publicKey // Usamos la variable extraída
       );
 
       console.log('Respuesta de EmailJS:', {
