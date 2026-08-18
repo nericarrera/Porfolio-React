@@ -11,7 +11,7 @@ interface Proyecto {
   images: string[];
   technologies: string[];
   githubUrl?: string;
-  demoUrl: string;
+  demoUrl?: string;
   codeUrl: string;
 }
 
@@ -29,7 +29,7 @@ const ProyectosSection = () => {
       technologies: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Responsive"],
       images: [
         "/no-code-login.png",
-        "/no-code-formulario.png", // Agrega más imágenes
+        "/no-code-formulario.png",
         "/no-code-contraseña.png"
       ],
       demoUrl: "https://github.com/nericarrera/NO-CODE---Grupo",
@@ -38,21 +38,20 @@ const ProyectosSection = () => {
     {
       id: 2,
       title: "Daysport E-commerce",
-      description: "Tienda online con carrito de compras, con filtro dinamico, variedad en prendas y accesorios. (En desarrollo).",
-      technologies: ["HTML", "CSS", "Javascript", "React", "Node.js", "Next.js", "Typescript", "Tailwind CSS", "Framer Motion", "Responsive"],
+      description: "Plataforma de e-commerce full-stack con frontend de tienda, panel de administración independiente y backend propio. Sistema de checkout completo con cálculo de envío en tiempo real por geolocalización (Google Maps + fórmula Haversine), pasarela de pagos integrada, autocompletado de direcciones, y gestión de pedidos, stock, envíos y clientes desde un panel admin a medida.",
+      technologies: ["Next.js 14", "TypeScript", "NestJS", "PostgreSQL", "Prisma ORM", "Tailwind CSS", "Framer Motion", "NextAuth.js", "Google Maps API", "Mercado Pago", "Cloudinary", "Brevo (Email)", "Docker", "Railway", "Responsive Design"],
       images: [
         "/daysport-1.png",
-        "/daysport-2.png", // Agrega más imágenes
+        "/daysport-2.png",
         "/daysport-3.png",
         "/daysport-4.png",
         "/daysport-5.png",
         "/daysport-6.png",
-        "/daysport-7.png",
+        "/daysport-7.png"
       ],
-      demoUrl: "https://nericarrera.github.io/web-en-desarrollo-daysport.github.io/",
-      codeUrl: "https://nericarrera.github.io/web-en-desarrollo-daysport.github.io/"
-    },
-    
+      demoUrl: "https://www.daysport.com.ar",
+      codeUrl: "https://www.daysport.com.ar"
+    }
   ];
 
   return (
@@ -79,8 +78,8 @@ const ProyectosSection = () => {
           Algunos de mis trabajos recientes y desafíos técnicos.
         </motion.p>
 
-        {/* Galería de proyectos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Grid centrado con 2 columnas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {proyectos.map((proyecto, index) => (
             <ProjectCard key={proyecto.id} proyecto={proyecto} index={index} />
           ))}
@@ -95,7 +94,9 @@ const ProyectosSection = () => {
           className="text-center mt-16"
         >
           <Link
-            href="#proyectos"
+            href="https://github.com/nericarrera"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center px-6 py-3 border border-sky-500 text-sky-500 hover:bg-sky-500/10 rounded-lg transition-colors"
           >
             Ver todos mis proyectos
@@ -130,16 +131,16 @@ const ProjectCard = ({ proyecto, index }: ProjectCardProps) => {
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="relative overflow-hidden rounded-xl bg-gray-800 border border-gray-700"
+      className="relative overflow-hidden rounded-xl bg-gray-800 border border-gray-700 flex flex-col"
     >
       {/* Carrusel de imágenes */}
-      <div className="h-48 relative overflow-hidden group">
-        <Link href={proyecto.demoUrl} target="_blank" rel="noopener noreferrer">
+      <div className="h-56 relative overflow-hidden group flex-shrink-0">
+        <Link href={proyecto.demoUrl || proyecto.codeUrl} target="_blank" rel="noopener noreferrer">
           <Image
             src={proyecto.images[currentImageIndex]}
             alt={`${proyecto.title} - Imagen ${currentImageIndex + 1}`}
             fill
-            className="object-cover"
+            className="object-cover hover:scale-105 transition-transform duration-300"
             quality={80}
           />
         </Link>
@@ -153,7 +154,7 @@ const ProjectCard = ({ proyecto, index }: ProjectCardProps) => {
                 e.stopPropagation();
                 prevImage();
               }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 text-white hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 text-white hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100 z-10"
               aria-label="Imagen anterior"
             >
               <ChevronLeftIcon className="h-6 w-6" />
@@ -165,7 +166,7 @@ const ProjectCard = ({ proyecto, index }: ProjectCardProps) => {
                 e.stopPropagation();
                 nextImage();
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 text-white hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 text-white hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100 z-10"
               aria-label="Imagen siguiente"
             >
               <ChevronRightIcon className="h-6 w-6" />
@@ -175,7 +176,7 @@ const ProjectCard = ({ proyecto, index }: ProjectCardProps) => {
 
         {/* Indicadores de posición */}
         {proyecto.images.length > 1 && (
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
             {proyecto.images.map((_, idx) => (
               <button
                 key={idx}
@@ -195,7 +196,7 @@ const ProjectCard = ({ proyecto, index }: ProjectCardProps) => {
       </div>
 
       {/* Contenido del proyecto */}
-      <div className="p-6">
+      <div className="p-6 flex flex-col flex-1">
         <h3 className="text-2xl font-bold text-white mb-2">{proyecto.title}</h3>
         
         <div className="flex flex-wrap gap-2 mb-4">
@@ -209,17 +210,28 @@ const ProjectCard = ({ proyecto, index }: ProjectCardProps) => {
           ))}
         </div>
 
-        <p className="text-gray-300 mb-6">{proyecto.description}</p>
+        {/* 🔥 DESCRIPCIÓN CON SCROLL - ESTE ES EL CAMBIO PRINCIPAL */}
+        <div className="relative flex-1 min-h-0">
+          <p className="text-gray-300 text-sm leading-relaxed h-24 overflow-y-auto pr-2 
+                        scrollbar-thin scrollbar-thumb-sky-500/50 scrollbar-track-gray-700/30 
+                        hover:scrollbar-thumb-sky-400 scrollbar-rounded p-2">
+            {proyecto.description}
+          </p>
+          {/* Degradado sutil para indicar scroll */}
+          <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none"></div>
+        </div>
 
-        <div className="flex gap-3">
-          <Link
-            href={proyecto.demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-sm font-medium transition-colors"
-          >
-            Ver Demo
-          </Link>
+        <div className="flex gap-3 mt-4 flex-shrink-0">
+          {proyecto.demoUrl && (
+            <Link
+              href={proyecto.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-sm font-medium transition-colors"
+            >
+              Ver Demo
+            </Link>
+          )}
           <Link
             href={proyecto.codeUrl}
             target="_blank"
