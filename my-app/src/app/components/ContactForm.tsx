@@ -292,8 +292,8 @@ const ContactForm = () => {
               </button>
 
               <a
-                href="/cv-2025-nericarrera.pdf"
-                download="CV_Neri_Carrera.pdf"
+                href="/cv-2026-nc.pdf"
+                download="cv-2026-nc.pdf"
                 className="px-6 py-3 border border-sky-600 text-sky-400 hover:bg-gray-800 font-medium rounded-md transition-colors"
               >
                 Descargar CV
