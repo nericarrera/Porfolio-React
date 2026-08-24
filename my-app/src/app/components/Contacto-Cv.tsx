@@ -145,7 +145,7 @@ const handleSubmit = async (e: FormEvent) => {
                   <p className="text-gray-400 mb-4">Descarga mi CV actualizado en formato PDF.</p>
                   <a
                     href="/#cv" 
-                    download="nericarrera-cv-programacion-2025.pdf"
+                    download="cv-2026-nc.pdf"
                     className="inline-flex items-center px-5 py-2.5 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
                   >
                     <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
