@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
-  Gamepad2,
+BatteryCharging,
   Wrench,
   Users,
   MapPin,
@@ -19,8 +19,8 @@ import {
 // 🎯 INTERESES
 // ===============================
 const interests = [
-  { icon: Gamepad2, label: 'Gaming' },
-  { icon: Wrench, label: 'Arreglar cosas' },
+  { icon: BatteryCharging, label: 'Descanso' },
+  { icon: Wrench, label: 'Aprendiendo cosas nuevas' },
   { icon: Users, label: 'Asesorar gente' },
 ];
 
@@ -79,8 +79,7 @@ const AboutSection = () => {
             </span>
           </h2>
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
-            No soy solo un desarrollador. Soy una persona con historia, con
-            procesos y con ganas de ayudarte a crecer.
+            No llegué a la programación por el camino tradicional. Y justamente por eso, mi forma de desarrollar tampoco lo es.
           </p>
         </motion.div>
 
@@ -129,55 +128,81 @@ const AboutSection = () => {
             transition={{ duration: 0.6 }}
             className="lg:col-span-3 space-y-6"
           >
-            {/* Título */}
-            <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
-              Hola, soy Neri Carrera.
-              <br />
-              <span className="text-sky-400">
-                Full-stack developer de Buenos Aires.
-              </span>
-            </h3>
+           {/* Título */}
+<h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+  Hola, soy Neri Carrera.
+  <br />
+  <span className="text-sky-400">
+    Full-stack developer de Buenos Aires.
+  </span>
+</h3>
 
-            {/* Párrafo 1 */}
-            <p className="text-gray-300 leading-relaxed">
-              Empecé a programar <strong className="text-white">a los 30 años</strong>.
-              Antes pensaba que la computadora era solo para jugar y arreglar
-              cosas. Un día descubrí que podía{' '}
-              <strong className="text-white">crear</strong> con ella, y no paré
-              más.
-            </p>
+{/* Párrafo 1 */}
+<p className="text-gray-300 leading-relaxed">
+  Empecé a programar{' '}
+  <strong className="text-white">a los 30 años</strong>.
+  Hasta ese momento, para mí la computadora era solo para dibujar
+  en Paint, jugar y escribir textos en Word. Jamás imaginé que podía
+  ser una herramienta{' '}
+  <strong className="text-white">para crear cosas desde cero.</strong>
+</p>
 
-            {/* Párrafo 2 */}
-            <p className="text-gray-300 leading-relaxed">
-              Todo empezó gracias a{' '}
-              <strong className="text-white">Jonathan Ariste</strong>, después
-              seguí con <strong className="text-white">Dalto</strong>, y cuando
-              me di cuenta ya estaba estudiando en la{' '}
-              <strong className="text-white">Universidad Nacional del Oeste</strong>.
-              Fui autodidacta el primer año, después me acomodé con cursos y
-              ahora trabajo y estudio al mismo tiempo.
-            </p>
+{/* Párrafo 2 */}
+<p className="text-gray-300 leading-relaxed">
+  Un día descubrí el mundo de la programación y quise entender cómo
+  funcionaba todo eso que había detrás de una página web. Empecé a
+  buscar, aprender y probar por mi cuenta, y ahí ya no paré más.
+  Mis primeros pasos fueron gracias a{' '}
+  <strong className="text-white">Jonathan Ariste</strong>.
+  Después conocí el contenido de{' '}
+  <strong className="text-white">Soy Dalto</strong>, que me ayudó a
+  seguir avanzando, y durante mi primer año aprendí principalmente
+  de manera autodidacta.
+  <br /><br />
+  Con el tiempo entendí que quería llevarlo más en serio. Empecé a
+  formarme profesionalmente, estudié en la{' '}
+  <strong className="text-white">
+    Universidad Nacional del Oeste
+  </strong>{' '}
+  y complementé mi formación con cursos y proyectos propios.
+  Pero hay otra parte de mi historia que también define mucho mi
+  forma de trabajar.
+</p>
 
-            {/* Párrafo 3 */}
-            <p className="text-gray-300 leading-relaxed">
-              <strong className="text-white">Soy vendedor de ropa</strong> desde
-              que empecé a trabajar. Y eso me enseñó algo clave: que la mejor
-              tecnología es la que{' '}
-              <strong className="text-white">ayuda a la gente</strong>. Por eso
-              me dedico a hacer webs que vendan, que funcionen, que resuelvan
-              problemas reales.
-            </p>
+{/* Párrafo 3 */}
+<p className="text-gray-300 leading-relaxed">
+  <strong className="text-white">
+    Antes de programar, trabajé durante años en ventas y especialmente
+    en el rubro de la indumentaria.
+  </strong>{' '}
+  Estar del otro lado del mostrador me enseñó a escuchar a las
+  personas, entender qué necesitan y, sobre todo, que detrás de cada
+  compra hay alguien buscando una solución.
+  <br /><br />
+  Por eso, cuando desarrollo una web, no pienso solamente en que se
+  vea bien o que el código funcione. Pienso en quién la va a usar,
+  qué problema tiene que resolver y cómo puede ayudar a un negocio
+  a crecer.
+  <br /><br />
+  De hecho, Daysport nació justamente de esa idea: combinar mi
+  experiencia en indumentaria con todo lo que aprendí de desarrollo
+  web. Terminé construyendo un e-commerce full-stack completo, con
+  frontend, backend, base de datos, panel de administración, gestión
+  de stock, pedidos y pagos.
+  <br /><br />
+  Y esa es también mi manera de crecer como desarrollador:{' '}
+  <strong className="text-white">
+    no esperar a que aparezca una oportunidad, sino construirla yo mismo.
+  </strong>
+</p>
 
-            {/* Párrafo 4 — el pro */}
-            <p className="text-gray-300 leading-relaxed">
-              Como no esperé a que apareciera la oportunidad,{' '}
-              <strong className="text-white">
-                la construí yo mismo
-              </strong>
-              : empecé a crear mis propios proyectos y a trabajar con clientes
-              reales. Hoy tengo 3 proyectos en producción, incluyendo un
-              e-commerce completo.
-            </p>
+{/* Párrafo 4 */}
+<p className="text-gray-300 leading-relaxed">
+  Hoy tengo más de 3 proyectos en producción y sigo{' '}
+  <strong className="text-white">
+    estudiando, aprendiendo y construyendo.
+  </strong>
+</p>
 
             {/* Intereses */}
             <div className="pt-2">
@@ -202,40 +227,49 @@ const AboutSection = () => {
           </motion.div>
         </div>
 
-        {/* ─── FILOSOFÍA DE TRABAJO ─── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative rounded-3xl p-8 md:p-10 bg-gradient-to-br from-sky-500/5 to-blue-600/5 border border-white/10 mb-16"
-        >
-          {/* Ícono de comillas decorativo */}
-          <Quote className="absolute top-6 right-8 w-16 h-16 text-sky-500/10" />
+       {/* ─── FILOSOFÍA DE TRABAJO ─── */}
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+  className="relative rounded-3xl p-8 md:p-10 bg-gradient-to-br from-sky-500/5 to-blue-600/5 border border-white/10 mb-16"
+>
+  {/* Ícono de comillas decorativo */}
+  <Quote className="absolute top-6 right-8 w-16 h-16 text-sky-500/10" />
 
-          <div className="relative max-w-3xl">
-            <h4 className="text-xs text-sky-400 uppercase tracking-wider mb-4 font-bold">
-              Mi filosofía de trabajo
-            </h4>
-            <p className="text-xl md:text-2xl text-white font-light leading-relaxed mb-4">
-              «Trabajo con{' '}
-              <span className="text-sky-400 font-normal">
-                procesos claros
-              </span>{' '}
-              y{' '}
-              <span className="text-sky-400 font-normal">
-                comunicación honesta
-              </span>
-              .»
-            </p>
-            <p className="text-gray-400 leading-relaxed">
-              Te muestro avances cada semana, tenés acceso al repositorio desde
-              el día 1, y si algo no funciona como se especificó, lo arreglo sin
-              costo. Me gusta asesorarte: si algo no le va a servir a tu
-              negocio, te lo digo antes de que lo pagues.
-            </p>
-          </div>
-        </motion.div>
+  <div className="relative max-w-3xl">
+    <h4 className="text-xs text-sky-400 uppercase tracking-wider mb-4 font-bold">
+      Mi filosofía de trabajo
+    </h4>
+
+    <p className="text-xl md:text-2xl text-white font-light leading-relaxed mb-4">
+      «Trabajo con{' '}
+      <span className="text-sky-400 font-normal">
+        procesos claros
+      </span>{' '}
+      y{' '}
+      <span className="text-sky-400 font-normal">
+        comunicación honesta
+      </span>
+      .»
+    </p>
+
+    <p className="text-gray-400 leading-relaxed">
+      Para mí, desarrollar un proyecto no es solamente escribir código.
+      Es entender qué necesita cada cliente, explicar las cosas de forma
+      clara y construir una solución que realmente tenga sentido para su
+      negocio.{' '}
+      <strong className="text-gray-300">
+        Prefiero decirte cuando algo no hace falta antes que hacerte pagar
+        por algo que no vas a necesitar.
+      </strong>{' '}
+      Durante el desarrollo vas viendo avances, tenés acceso al repositorio
+      desde el comienzo y, si algo no funciona como fue acordado, me hago
+      responsable de solucionarlo.
+    </p>
+  </div>
+</motion.div>
 
         {/* ─── STATS ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16">
