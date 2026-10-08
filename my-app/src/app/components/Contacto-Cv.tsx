@@ -1,188 +1,346 @@
 'use client';
-import { useState } from 'react';
+
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { motion } from 'framer-motion';
-import { ChangeEvent, FormEvent } from 'react';
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  Download,
+  Clock,
+} from 'lucide-react';
+import { FaGithub, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  const { name, value } = e.target;
-  setFormData(prev => ({ ...prev, [name]: value }));
-};
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (submitStatus !== 'idle') {
+      setSubmitStatus('idle');
+      setErrorMessage('');
+    }
+  };
 
-const handleSubmit = async (e: FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-  
-  try {
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setSubmitSuccess(true);
-    setFormData({ name: '', email: '', message: '' });
-  } catch (error) {
-    console.error('Error al enviar:', error);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error al enviar el mensaje');
+      }
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('[Contact] Error:', error);
+      setSubmitStatus('error');
+      setErrorMessage(
+        error instanceof Error ? error.message : 'Error al enviar el mensaje'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <section id="contacto" className="py-20 px-4 bg-neutral-950">
-      <div className="max-w-6xl mx-auto">
-        {/* Título */}
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-4xl font-bold text-center text-white mb-4"
-        >
-          <span className="text-sky-500">Contacto</span> & CV
-        </motion.h2>
-        
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-xl text-center text-gray-300 mb-16 max-w-2xl mx-auto"
-        >
-          ¿Interesado en trabajar juntos? Envíame un mensaje o descarga mi CV.
-        </motion.p>
+    <section
+      id="contacto"
+      className="relative w-full py-24 px-6 bg-gradient-to-b from-black to-gray-950"
+    >
+      {/* Fondo decorativo */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl" />
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Formulario de Contacto */}
+      <div className="relative max-w-6xl mx-auto">
+        {/* ─── HEADER ─── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="inline-block px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-300 text-sm font-medium mb-4">
+            Contacto
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            Hablemos de{' '}
+            <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
+              tu proyecto
+            </span>
+          </h2>
+          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+            Contame qué necesitás y te respondo en menos de 24 horas con una propuesta.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          {/* ─── FORMULARIO ─── */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="bg-gray-800/50 border border-gray-700 rounded-xl p-8"
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-3 rounded-2xl p-8 bg-white/5 backdrop-blur-sm border border-white/10"
           >
-            <h3 className="text-2xl font-bold text-white mb-6">Envíame un mensaje</h3>
-            
-            {submitSuccess ? (
-              <div className="p-4 bg-green-500/10 border border-green-500 text-green-500 rounded-lg mb-6">
-                ¡Mensaje enviado con éxito! Me pondré en contacto pronto.
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-gray-300 mb-2">Nombre</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all"
-                  />
-                </div>
+            <h3 className="text-2xl font-bold text-white mb-2">
+              Enviame un mensaje
+            </h3>
+            <p className="text-sm text-gray-400 mb-6">
+              Completa el formulario y te respondo a la brevedad.
+            </p>
 
+            {/* Success */}
+            {submitStatus === 'success' && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-start gap-3"
+              >
+                <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <label htmlFor="email" className="block text-gray-300 mb-2">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all"
-                  />
+                  <p className="text-emerald-300 font-medium">
+                    ¡Mensaje enviado con éxito!
+                  </p>
+                  <p className="text-sm text-emerald-400/80 mt-1">
+                    Te voy a responder a la brevedad. Gracias por escribirme.
+                  </p>
                 </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-gray-300 mb-2">Mensaje</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all"
-                  ></textarea>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
-                </button>
-              </form>
+              </motion.div>
             )}
+
+            {/* Error */}
+            {submitStatus === 'error' && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-start gap-3"
+              >
+                <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-red-300 font-medium">
+                    No pudimos enviar el mensaje
+                  </p>
+                  <p className="text-sm text-red-400/80 mt-1">{errorMessage}</p>
+                </div>
+              </motion.div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitting}
+                  placeholder="Tu nombre"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/30 focus:outline-none transition-all disabled:opacity-50"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitting}
+                  placeholder="tu@email.com"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/30 focus:outline-none transition-all disabled:opacity-50"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                  Mensaje
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={5}
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitting}
+                  placeholder="Contame sobre tu proyecto: qué necesitás, para cuándo, y cualquier detalle que ayude..."
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/30 focus:outline-none transition-all resize-none disabled:opacity-50"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="group inline-flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-sky-500/30 hover:shadow-sky-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    Enviar mensaje
+                  </>
+                )}
+              </button>
+            </form>
           </motion.div>
 
-          {/* Sección de CV */}
+          {/* ─── INFO LATERAL ─── */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="bg-gray-800/50 border border-gray-700 rounded-xl p-8"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:col-span-2 space-y-6"
           >
-            <h3 className="text-2xl font-bold text-white mb-6">Mi Curriculum Vitae</h3>
-            
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-sky-500/10 rounded-lg">
-                  <svg className="w-6 h-6 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
+            {/* ─── CTA WhatsApp ─── */}
+            <a
+              href="https://wa.me/5491121764065?text=Hola%20Neri,%20vi%20tu%20portfolio%20y%20quiero%20consultarte%20por%20un%20proyecto"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block rounded-2xl p-6 bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/30 hover:border-emerald-500/50 transition-all duration-300"
+            >
+              <div className="flex items-center gap-4 mb-3">
+                <div className="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
+                  <FaWhatsapp className="w-6 h-6 text-emerald-400" />
                 </div>
                 <div>
-                  <h4 className="text-xl font-semibold text-white mb-2">Descargar CV</h4>
-                  <p className="text-gray-400 mb-4">Descarga mi CV actualizado en formato PDF.</p>
-                  <a
-                    href="/cv" 
-                    download="cv-2026-nc.pdf"
-                    className="inline-flex items-center px-5 py-2.5 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    Descargar CV
-                  </a>
+                  <h4 className="font-bold text-white">WhatsApp directo</h4>
+                  <p className="text-xs text-emerald-300">Respuesta rápida</p>
                 </div>
               </div>
+              <p className="text-sm text-gray-300">
+                ¿Preferís escribir directo? Hacé click y te contesto al toque.
+              </p>
+            </a>
 
-              <div className="flex items-start gap-4 pt-6 border-t border-gray-700">
-                <div className="p-3 bg-amber-500/10 rounded-lg">
-                  <svg className="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="text-xl font-semibold text-white mb-2">Contacto Directo</h4>
-                  <p className="text-gray-400 mb-2">Email: devnericarrera@gmail.com</p>
-                  <p className="text-gray-400 mb-4">Teléfono: +54 11 2176-4065</p>
-                  <div className="flex gap-4">
-                    <a href="#" className="text-gray-400 hover:text-sky-500 transition-colors">
-                      <span className="sr-only">LinkedIn</span>
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                      </svg>
-                    </a>
-                    <a href="#" className="text-gray-400 hover:text-sky-500 transition-colors">
-                      <span className="sr-only">GitHub</span>
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                      </svg>
+            {/* ─── Info de contacto ─── */}
+            <div className="rounded-2xl p-6 bg-white/5 backdrop-blur-sm border border-white/10">
+              <h4 className="font-bold text-white mb-5">Información de contacto</h4>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <Mail className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider">Email</p>
+                    <a
+                      href="mailto:nericarrera1825@gmail.com"
+                      className="text-sm text-gray-200 hover:text-sky-400 transition-colors break-all"
+                    >
+                      nericarrera1825@gmail.com
                     </a>
                   </div>
-                </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Phone className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider">Teléfono</p>
+                    <a
+                      href="tel:+5491121764065"
+                      className="text-sm text-gray-200 hover:text-sky-400 transition-colors"
+                    >
+                      +54 11 2176-4065
+                    </a>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider">Ubicación</p>
+                    <p className="text-sm text-gray-200">Buenos Aires, Argentina</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider">Respuesta</p>
+                    <p className="text-sm text-gray-200">En menos de 24 horas</p>
+                  </div>
+                </li>
+              </ul>
+
+              {/* Redes sociales */}
+              <div className="flex gap-3 mt-6 pt-6 border-t border-white/10">
+                <a
+                  href="https://github.com/nericarrera"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 hover:bg-sky-500/20 border border-white/10 hover:border-sky-500/40 text-gray-400 hover:text-sky-300 transition-all duration-300"
+                >
+                  <FaGithub className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://linkedin.com/in/nericarrera"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 hover:bg-sky-500/20 border border-white/10 hover:border-sky-500/40 text-gray-400 hover:text-sky-300 transition-all duration-300"
+                >
+                  <FaLinkedin className="w-5 h-5" />
+                </a>
               </div>
             </div>
+
+            {/* ─── Descargar CV ─── */}
+            <a
+              href="/cv-2026-nc.pdf"
+              download
+              className="group block rounded-2xl p-6 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-sky-500/40 transition-all duration-300"
+            >
+              <div className="flex items-center gap-4 mb-3">
+                <div className="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center">
+                  <Download className="w-6 h-6 text-sky-400" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-white">Descargar CV</h4>
+                  <p className="text-xs text-gray-500">PDF · 1 página</p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-400">
+                Toda mi experiencia resumida en un PDF.
+              </p>
+            </a>
           </motion.div>
         </div>
       </div>

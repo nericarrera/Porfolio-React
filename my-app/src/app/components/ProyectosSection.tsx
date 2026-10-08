@@ -1,262 +1,378 @@
 'use client';
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
+import {
+  ArrowRight,
+  ExternalLink,
+  Code2,
+  Building2,
+  GraduationCap,
+  User,
+  Clock,
+  Sparkles,
+} from 'lucide-react';
+import ProjectModal, { type Project } from './ProjectModal';
 
-interface Proyecto {
-  title: string;
-  description: string;
-  images: string[];
-  technologies: string[];
-  githubUrl?: string;
-  demoUrl?: string;
-  codeUrl: string;
-}
+// ===============================
+// 🎯 DATOS DE PROYECTOS
+// ===============================
+// ⚠️ EDITAR: revisá los datos de cada proyecto
+// ===============================
+const projects: Project[] = [
+  {
+    id: 1,
+    title: 'Daysport E-commerce',
+    subtitle: 'Tienda online + panel admin para ropa deportiva',
+    description:
+      'Plataforma de e-commerce full-stack con tienda pública, panel de administración independiente y backend propio. Incluye checkout con cálculo de envío por geolocalización, integración con MercadoPago y gestión completa de pedidos, stock y clientes.',
+    type: 'cliente',
+    duration: '30 días',
+    role: 'Full-stack Developer',
+    technologies: [
+      'Next.js 14',
+      'TypeScript',
+      'NestJS',
+      'PostgreSQL',
+      'Prisma ORM',
+      'Tailwind CSS',
+      'Framer Motion',
+      'NextAuth.js',
+      'Google Maps API',
+      'MercadoPago',
+      'Cloudinary',
+      'Brevo',
+      'Docker',
+      'Railway',
+    ],
+    images: [
+      '/daysport-0.png',
+      '/daysport-1.png',
+      '/daysport-2.png',
+      '/daysport-3.png',
+      '/daysport-4.png',
+      '/daysport-5.png',
+      '/daysport-6.png',
+      '/daysport-7.png',
+    ],
+    projectUrl: 'https://www.daysport.com.ar',
+    featured: true,
+    challenge:
+      'La tienda necesitaba vender online con pago integrado y cálculo automático de envíos por zona, algo que no podía resolver con plataformas no-code.',
+    solution:
+      'Desarrollé un e-commerce a medida con Next.js 14 en el frontend y NestJS + PostgreSQL en el backend. Implementé el cálculo de envíos usando Google Maps API + fórmula Haversine, integré MercadoPago como pasarela de pagos, y construí un panel admin completo para gestionar pedidos, stock y clientes.',
+    results: [
+      'Checkout 100% automatizado con pago online',
+      'Cálculo de envíos en tiempo real por geolocalización',
+      'Panel admin a medida para gestión completa del negocio',
+      'Emails transaccionales automáticos (Brevo)',
+    ],
+  },
+  {
+    id: 2,
+    title: 'Adopciones BA',
+    subtitle: 'Plataforma para conectar mascotas con familias',
+    description:
+      'Aplicación web full-stack para publicar mascotas en adopción y conectar con personas interesadas. Incluye autenticación de usuarios, gestión de publicaciones, filtros de búsqueda y notificaciones automáticas por email.',
+    type: 'curso',
+    duration: '15 días',
+    role: 'Full-stack Developer',
+    technologies: [
+      'Next.js 14',
+      'Vite.js',
+      'TypeScript',
+      'NestJS',
+      'Tailwind CSS',
+      'Framer Motion',
+      'Vercel',
+    ],
+    images: ['/ba-1.png', '/ba-2.png', '/ba-3.png', '/ba-4.png', '/ba-5.png'],
+    projectUrl: 'https://ecommerce-ba-sage.vercel.app/',
+    challenge:
+      'Crear una plataforma completa de adopciones con autenticación, gestión de publicaciones y sistema de notificaciones por email.',
+    solution:
+      'Desarrollé la aplicación full-stack con Next.js y NestJS. Implementé autenticación de usuarios, CRUD de publicaciones, filtros de búsqueda y un sistema de emails automáticos para notificar a los interesados.',
+    results: [
+      'Sistema completo de publicaciones con imágenes',
+      'Autenticación segura de usuarios',
+      'Notificaciones automáticas por email',
+    ],
+  },
+  {
+    id: 3,
+    title: 'NO-CODE',
+    subtitle: 'Sistema de autenticación para plataforma No-Code',
+    description:
+      'Módulo de autenticación para un proyecto de plataforma No-Code. Incluye login, formulario de registro de usuarios y flujo completo de revalidación de contraseña.',
+    type: 'curso',
+    duration: '10 días',
+    role: 'Frontend Developer',
+    technologies: [
+      'React',
+      'Vite',
+      'Tailwind CSS',
+      'Framer Motion',
+      'Responsive Design',
+    ],
+    images: [
+      '/no-code-login.png',
+      '/no-code-formulario.png',
+      '/no-code-contraseña.png',
+    ],
+    githubUrl: 'https://github.com/nericarrera/NO-CODE---Grupo',
+    challenge:
+      'Implementar un sistema de autenticación completo con validaciones y flujo de revalidación de contraseña para una plataforma No-Code.',
+    solution:
+      'Desarrollé el módulo con React + Vite y Tailwind CSS. Incluye formularios validados, login seguro y flujo completo de recuperación de contraseña con diseño moderno.',
+    results: [
+      'Login funcional con validaciones',
+      'Formulario de registro de usuarios',
+      'Flujo completo de revalidación de contraseña',
+    ],
+  },
+];
 
-interface ProjectCardProps {
-  proyecto: Proyecto;
-  index: number;
-}
-
-const ProyectosSection = () => {
-  const proyectos = [
-    {
-      id: 1,
-      title: "Proyecto NO-CODE",
-      description: "Login para proyecto de No-Code, Formulario para agregar usuario y revalidar contraseña. Diseño moderno con React + Vite y Tailwind CSS",
-      technologies: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Responsive"],
-      images: [
-        "/no-code-login.png",
-        "/no-code-formulario.png",
-        "/no-code-contraseña.png"
-      ],
-      codeUrl: "https://github.com/nericarrera/NO-CODE---Grupo",
-    },
-    {
-      id: 2,
-      title: "Daysport E-commerce",
-      description: "Plataforma de e-commerce full-stack con frontend de tienda, panel de administración independiente y backend propio. Sistema de checkout completo con cálculo de envío en tiempo real por geolocalización (Google Maps + fórmula Haversine), pasarela de pagos integrada, autocompletado de direcciones, y gestión de pedidos, stock, envíos y clientes desde un panel admin a medida.",
-      technologies: ["Next.js 14", "TypeScript", "NestJS", "PostgreSQL", "Prisma ORM", "Tailwind CSS", "Framer Motion", "NextAuth.js", "Google Maps API", "Mercado Pago", "Cloudinary", "Brevo (Email)", "Docker", "Railway", "Responsive Design"],
-      images: [
-        "/daysport-1.png",
-        "/daysport-2.png",
-        "/daysport-3.png",
-        "/daysport-4.png",
-        "/daysport-5.png",
-        "/daysport-6.png",
-        "/daysport-7.png"
-      ],
-      codeUrl: "https://www.daysport.com.ar",
-    },
-    {
-      id: 3,
-      title: "Adopciones Ba E-commerce",
-      description: "Plataforma completa para conectar personas con mascotas y que puedan ser adoptadas. Autenticación de usuarios, gestión de publicaciones y notificaciones por email.",
-      technologies: ["Vite.js", "Next.js 14", "TypeScript", "NestJS", "Tailwind CSS", "Framer Motion", "Vercel", "Responsive Design"],
-      images: [
-        "/ba-1.png",
-        "/ba-2.png",
-        "/ba-3.png",
-        "/ba-4.png",
-        "/ba-5.png"      
-      ],
-
-      codeUrl: "https://ecommerce-ba-sage.vercel.app/",
-    }
-  ];
-
-  return (
-    <section id="proyectos" className="py-20 px-4 bg-neutral-950">
-      <div className="max-w-6xl mx-auto">
-        {/* Título */}
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-4xl font-bold text-center text-white mb-4"
-        >
-          Mis <span className="text-sky-500">Proyectos</span>
-        </motion.h2>
-        
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-xl text-center text-gray-300 mb-16 max-w-2xl mx-auto"
-        >
-          Algunos de mis trabajos recientes y desafíos técnicos.
-        </motion.p>
-
-        {/* Grid centrado con 2 columnas */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {proyectos.map((proyecto, index) => (
-            <ProjectCard key={proyecto.id} proyecto={proyecto} index={index} />
-          ))}
-        </div>
-
-        {/* Botón para más proyectos */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
-          <Link
-            href="https://github.com/nericarrera"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center px-6 py-3 border border-sky-500 text-sky-500 hover:bg-sky-500/10 rounded-lg transition-colors"
-          >
-            Ver todos mis proyectos
-            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </Link>
-        </motion.div>
-      </div>
-    </section>
-  );
+// ===============================
+// 🎨 CONFIGURACIÓN DE TIPOS
+// ===============================
+const typeConfig = {
+  cliente: {
+    label: 'Cliente real',
+    icon: Building2,
+    bg: 'bg-emerald-500/10',
+    border: 'border-emerald-500/30',
+    text: 'text-emerald-300',
+  },
+  curso: {
+    label: 'Proyecto de curso',
+    icon: GraduationCap,
+    bg: 'bg-sky-500/10',
+    border: 'border-sky-500/30',
+    text: 'text-sky-300',
+  },
+  personal: {
+    label: 'Proyecto personal',
+    icon: User,
+    bg: 'bg-purple-500/10',
+    border: 'border-purple-500/30',
+    text: 'text-purple-300',
+  },
 };
 
-const ProjectCard = ({ proyecto, index }: ProjectCardProps) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === proyecto.images.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === 0 ? proyecto.images.length - 1 : prev - 1
-    );
-  };
+// ===============================
+// 🎯 SECCIÓN PRINCIPAL
+// ===============================
+export default function ProyectosSection() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      className="relative overflow-hidden rounded-xl bg-gray-800 border border-gray-700 flex flex-col"
-    >
-      {/* Carrusel de imágenes */}
-      <div className="h-56 relative overflow-hidden group flex-shrink-0">
-        <Link href={proyecto.demoUrl || proyecto.codeUrl} target="_blank" rel="noopener noreferrer">
-          <Image
-            src={proyecto.images[currentImageIndex]}
-            alt={`${proyecto.title} - Imagen ${currentImageIndex + 1}`}
-            fill
-            className="object-cover hover:scale-105 transition-transform duration-300"
-            quality={80}
-          />
-        </Link>
+    <>
+      <section
+        id="proyectos"
+        className="relative w-full py-24 px-6 bg-gradient-to-b from-gray-950 to-black"
+      >
+        {/* Fondo decorativo */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl" />
+        </div>
 
-        {/* Flechas de navegación */}
-        {proyecto.images.length > 1 && (
-          <>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                prevImage();
-              }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 text-white hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100 z-10"
-              aria-label="Imagen anterior"
-            >
-              <ChevronLeftIcon className="h-6 w-6" />
-            </button>
-
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                nextImage();
-              }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 text-white hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100 z-10"
-              aria-label="Imagen siguiente"
-            >
-              <ChevronRightIcon className="h-6 w-6" />
-            </button>
-          </>
-        )}
-
-        {/* Indicadores de posición */}
-        {proyecto.images.length > 1 && (
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
-            {proyecto.images.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setCurrentImageIndex(idx);
-                }}
-                className={`h-2 w-2 rounded-full transition-all ${
-                  idx === currentImageIndex ? 'bg-white w-4' : 'bg-white/50'
-                }`}
-                aria-label={`Ir a imagen ${idx + 1}`}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Contenido del proyecto */}
-      <div className="p-6 flex flex-col flex-1">
-        <h3 className="text-2xl font-bold text-white mb-2">{proyecto.title}</h3>
-        
-        <div className="flex flex-wrap gap-2 mb-4">
-          {proyecto.technologies.map((tech, i) => (
-            <span 
-              key={i}
-              className="px-3 py-1 bg-gray-700 text-amber-300 rounded-full text-xs"
-            >
-              {tech}
+        <div className="relative max-w-6xl mx-auto">
+          {/* ─── HEADER ─── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-300 text-sm font-medium mb-4">
+              Proyectos
             </span>
-          ))}
-        </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+              Trabajos que{' '}
+              <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
+                resuelven problemas reales
+              </span>
+            </h2>
+            <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+              Cada proyecto incluye el desafío, la solución técnica y los resultados
+              obtenidos.
+            </p>
+          </motion.div>
 
-        {/* 🔥 DESCRIPCIÓN CON SCROLL - ESTE ES EL CAMBIO PRINCIPAL */}
-        <div className="relative flex-1 min-h-0">
-          <p className="text-gray-300 text-sm leading-relaxed h-24 overflow-y-auto pr-2 
-                        scrollbar-thin scrollbar-thumb-sky-500/50 scrollbar-track-gray-700/30 
-                        hover:scrollbar-thumb-sky-400 scrollbar-rounded p-2">
-            {proyecto.description}
-          </p>
-          {/* Degradado sutil para indicar scroll */}
-          <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-gray-800 to-transparent pointer-events-none"></div>
-        </div>
+          {/* ─── GRID DE PROYECTOS ─── */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {projects.map((project, index) => {
+              const config = typeConfig[project.type];
+              const TypeIcon = config.icon;
+              const visibleTechs = project.technologies.slice(0, 5);
+              const remainingCount = project.technologies.length - visibleTechs.length;
 
-        <div className="flex gap-3 mt-4 flex-shrink-0">
-          {proyecto.demoUrl && (
-            <Link
-              href={proyecto.demoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-sm font-medium transition-colors"
-            >
-              Ver Demo
-            </Link>
-          )}
-          <Link
-            href={proyecto.codeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-transparent border border-gray-600 hover:border-sky-400 text-white rounded-lg text-sm font-medium transition-colors"
+              return (
+                <motion.article
+                  key={project.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className={`group relative flex flex-col rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm border transition-all duration-300 hover:border-sky-500/40 ${
+                    project.featured
+                      ? 'border-sky-500/30 lg:col-span-2'
+                      : 'border-white/10'
+                  }`}
+                >
+                  {/* Imagen */}
+                  <div
+                    className={`relative w-full overflow-hidden bg-black ${
+                      project.featured ? 'aspect-[21/9]' : 'aspect-video'
+                    }`}
+                  >
+                    <Image
+                      src={project.images[0]}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      quality={85}
+                    />
+
+                    {/* Overlay gradiente */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                    {/* Badge tipo */}
+                    <div className="absolute top-4 left-4">
+                      <span
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full ${config.bg} ${config.border} border ${config.text} text-xs font-medium backdrop-blur-sm`}
+                      >
+                        <TypeIcon className="w-3.5 h-3.5" />
+                        {config.label}
+                      </span>
+                    </div>
+
+                    {/* Badge destacado */}
+                    {project.featured && (
+                      <div className="absolute top-4 right-4">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 text-white text-xs font-bold shadow-lg">
+                          <Sparkles className="w-3.5 h-3.5" />
+                          Destacado
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Metadata abajo */}
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-medium border border-white/20">
+                        <Clock className="w-3.5 h-3.5" />
+                        {project.duration}
+                      </span>
+                      <span className="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-medium border border-white/20">
+                        {project.role}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Contenido */}
+                  <div className="flex flex-col p-6 flex-1">
+                    {/* Título */}
+                    <h3 className="text-2xl font-bold text-white mb-2">
+                      {project.title}
+                    </h3>
+                    <p className="text-sky-400 text-sm mb-4">
+                      {project.subtitle}
+                    </p>
+
+                    {/* Descripción corta */}
+                    <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                      {project.description}
+                    </p>
+
+                    {/* Tecnologías */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {visibleTechs.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-1 bg-white/5 border border-white/10 text-gray-300 rounded-lg text-xs font-medium"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {remainingCount > 0 && (
+                        <span className="px-2.5 py-1 bg-sky-500/10 border border-sky-500/30 text-sky-300 rounded-lg text-xs font-medium">
+                          +{remainingCount} más
+                        </span>
+                      )}
+                    </div>
+
+                    {/* CTAs */}
+                    <div className="flex flex-wrap gap-3 mt-auto">
+                      <button
+                        onClick={() => setSelectedProject(project)}
+                        className="group/btn inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-medium rounded-lg transition-all duration-300 shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40"
+                      >
+                        Ver caso completo
+                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      </button>
+
+                      {project.projectUrl && (
+                        <a
+                          href={project.projectUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/40 text-white font-medium rounded-lg transition-all duration-300 text-sm"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Ver sitio
+                        </a>
+                      )}
+
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/40 text-white font-medium rounded-lg transition-all duration-300 text-sm"
+                        >
+                          <Code2 className="w-4 h-4" />
+                          GitHub
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
+
+          {/* ─── CTA FINAL ─── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-center mt-20"
           >
-            Ver Código
-          </Link>
+            <p className="text-gray-400 mb-6 text-lg">
+              ¿Tenés un proyecto en mente?
+            </p>
+            <Link
+              href="#contacto"
+              className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-sky-500/30 hover:shadow-sky-500/50 hover:scale-105"
+            >
+              Hablemos de tu idea
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
         </div>
-      </div>
-    </motion.div>
-  );
-};
+      </section>
 
-export default ProyectosSection;
+      {/* ─── MODAL ─── */}
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
+    </>
+  );
+}

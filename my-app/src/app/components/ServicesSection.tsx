@@ -161,7 +161,7 @@ const ServicesSection = () => {
         </motion.div>
 
         {/* ─── PAQUETES ─── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 mt-8 gap-8 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 mt-20 gap-8 mb-24">
           {packages.map((pkg, index) => {
             const Icon = pkg.icon;
             return (

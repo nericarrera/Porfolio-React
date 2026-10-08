@@ -1,110 +1,134 @@
 'use client';
+
 import { motion } from 'framer-motion';
+import { GraduationCap, Code2, BarChart3, Brain, Calendar, Award } from 'lucide-react';
+
+const formacionItems = [
+  {
+    id: 1,
+    icon: Code2,
+    title: 'Aprende a Programar',
+    institution: 'Argentina Programa',
+    year: '2022',
+    status: 'Certificado',
+    description:
+      'Fundamentos de JavaScript, HTML, CSS y metodologías ágiles. Primer paso en mi carrera como desarrollador.',
+  },
+  {
+    id: 2,
+    icon: GraduationCap,
+    title: 'Tecnicatura en Tecnologías Web',
+    institution: 'Universidad Nacional del Oeste',
+    year: '2023 - 2025',
+    status: 'Finalizada',
+    description:
+      'Análisis y desarrollo de sistemas web y móviles. Formación en desarrollo web, diseño gráfico y arquitectura de software.',
+  },
+  {
+    id: 3,
+    icon: BarChart3,
+    title: 'Introducción a la Ciencia de Datos',
+    institution: 'Santander Open Academy',
+    year: '2025',
+    status: 'Certificado',
+    description:
+      'Fundamentos de análisis de datos, visualización y herramientas para toma de decisiones basadas en datos.',
+  },
+  {
+    id: 4,
+    icon: Brain,
+    title: 'Iniciación al Desarrollo con IA',
+    institution: 'Big School',
+    year: '2025',
+    status: 'Certificado',
+    description:
+      'Fundamentos de inteligencia artificial aplicada al desarrollo de software. Prompting, APIs y casos de uso reales.',
+  },
+];
 
 const FormacionSection = () => {
-  const formacionItems = [
-    {
-      id: 1,
-      title: "Aprende a Programar",
-      institution: "Argentina Programa",
-      year: "2022",
-      description: "Javascript, HTML, CSS, y metodologías ágiles. (CERTIFICADO)",
-      icon: "🚀"
-    },
-    {
-      id: 2,
-      title: "Tecnicatura Univ. en Tegnologias Web",
-      institution: "Universidad Nacional del Oeste",
-      year: "2025",
-      description: "análisis y desarrollo de sistemas informáticos con principal énfasis en el análisis y desarrollo de sistemas web y móviles, ya que cuenta con una capacitación en el desarrollo web y diseño gráfico, (CERTIFICADO)",
-      icon: "🎓"
-    },
-    {
-      id: 3,
-      title: "Introduccion a la Ciencia de Datos",
-      institution: "Santender, Open Academy",
-      year: "2025",
-      description: "Fundamentos a la utilizacion de Ciencia de Datos. (CERTIFICADO)",
-      icon: "⚡"
-    },
-    
-    {
-      id: 4,
-      title: "Iniciacion al Desarrollo con IA",
-      institution: "Big School",
-      year: "2025",
-      description: "Fundamentos a la utilizacion de IA. (CERTIFICADO)",
-      icon: "⚡"
-    },
-
-
-  ];
-
   return (
-    <section id="formacion" className="py-20 px-4 bg-neutral-950">
-      <div className="max-w-6xl mx-auto">
-        {/* Título */}
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-5xl font-bold text-center text-white mb-4"
-        >
-          Mi <span className="text-sky-500">Formación</span>
-        </motion.h2>
-        
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-xl text-center text-gray-300 mb-16 max-w-2xl mx-auto"
-        >
-          Educación y certificaciones que han moldeado mi carrera.
-        </motion.p>
+    <section
+      id="formacion"
+      className="relative w-full py-24 px-6 bg-gradient-to-b from-gray-950 to-black"
+    >
+      {/* Fondo decorativo */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl" />
+      </div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Línea vertical */}
-          <div className="absolute left-1/2 h-full w-1 bg-gradient-to-b from-sky-300 to-sky-800 hidden md:block"></div>
-          
-          {/* Items */}
-          <div className="space-y-12 md:space-y-0">
-            {formacionItems.map((item, index) => (
+      <div className="relative max-w-6xl mx-auto">
+        {/* ─── HEADER ─── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="inline-block px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-300 text-sm font-medium mb-4">
+            Formación
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            Mi{' '}
+            <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
+              educación
+            </span>{' '}
+            técnica
+          </h2>
+          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+            Certificaciones y formación universitaria que respaldan mi trabajo como desarrollador.
+          </p>
+        </motion.div>
+
+        {/* ─── GRID DE CARDS ─── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {formacionItems.map((item, index) => {
+            const Icon = item.icon;
+            return (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className={`relative flex flex-col md:flex-row ${index % 2 === 0 ? 'md:flex-row-reverse' : ''} items-center justify-between gap-8`}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -4 }}
+                className="group relative flex flex-col rounded-2xl p-6 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-sky-500/40 hover:bg-white/[0.07] transition-all duration-300"
               >
-                {/* Contenido izquierdo (o derecho para items pares) */}
-                <div className={`md:w-5/12 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                  <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
-                    <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-lg hover:shadow-sky-500/10 transition-all">
-                      <span className="text-4xl mb-2 block">{item.icon}</span>
-                      <h3 className="text-2xl font-bold text-white mb-1">{item.title}</h3>
-                      <p className="text-sky-400 font-medium mb-2">{item.institution}</p>
-                      <p className="text-gray-300">{item.description}</p>
-                      <div className="mt-3 px-4 py-1 bg-sky-800 text-neutral-50 rounded-full text-sm inline-block">
-                        {item.year}
-                      </div>
-                    </div>
-                  </motion.div>
+                {/* Header con ícono + año */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-500/20 to-blue-600/10 border border-sky-500/30 flex items-center justify-center group-hover:from-sky-500/30 group-hover:to-blue-600/20 transition-all duration-300">
+                    <Icon className="w-6 h-6 text-sky-400" />
+                  </div>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-300 text-xs font-medium">
+                      <Calendar className="w-3 h-3" />
+                      {item.year}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-medium">
+                      <Award className="w-3 h-3" />
+                      {item.status}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Punto central (solo en desktop) */}
-                <div className="hidden md:flex items-center justify-center w-16 h-16 bg-gray-300 border-4 border-sky-300 rounded-full z-10">
-                  <span className="text-xl">{index + 1}</span>
-                </div>
+                {/* Título */}
+                <h3 className="text-xl font-bold text-white mb-1.5 leading-tight">
+                  {item.title}
+                </h3>
 
-                {/* Espacio vacío para alternar lados */}
-                <div className="md:w-5/12"></div>
+                {/* Institución */}
+                <p className="text-sm text-sky-400 font-medium mb-4">
+                  {item.institution}
+                </p>
+
+                {/* Descripción */}
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  {item.description}
+                </p>
               </motion.div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>
