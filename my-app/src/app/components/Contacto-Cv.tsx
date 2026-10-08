@@ -12,8 +12,10 @@ import {
   Loader2,
   Download,
   Clock,
+  Code2,
+  Link,
+  MessageCircle,
 } from 'lucide-react';
-import { FaGithub, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -243,7 +245,7 @@ const ContactSection = () => {
             >
               <div className="flex items-center gap-4 mb-3">
                 <div className="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
-                  <FaWhatsapp className="w-6 h-6 text-emerald-400" />
+                  <MessageCircle className="w-6 h-6 text-emerald-400" />
                 </div>
                 <div>
                   <h4 className="font-bold text-white">WhatsApp directo</h4>
@@ -308,7 +310,7 @@ const ContactSection = () => {
                   aria-label="GitHub"
                   className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 hover:bg-sky-500/20 border border-white/10 hover:border-sky-500/40 text-gray-400 hover:text-sky-300 transition-all duration-300"
                 >
-                  <FaGithub className="w-5 h-5" />
+                  <Code2 className="w-5 h-5" />
                 </a>
                 <a
                   href="https://linkedin.com/in/nericarrera"
@@ -317,7 +319,7 @@ const ContactSection = () => {
                   aria-label="LinkedIn"
                   className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 hover:bg-sky-500/20 border border-white/10 hover:border-sky-500/40 text-gray-400 hover:text-sky-300 transition-all duration-300"
                 >
-                  <FaLinkedin className="w-5 h-5" />
+                  <Link className="w-5 h-5" />
                 </a>
               </div>
             </div>
