@@ -112,19 +112,6 @@ const AboutSection = () => {
                 {/* Overlay sutil */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               </div>
-
-              {/* Badge flotante */}
-              <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6">
-                <div className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-gray-950 border border-white/10 shadow-2xl backdrop-blur-sm">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-                  </span>
-                  <span className="text-sm font-medium text-emerald-300">
-                    Disponible
-                  </span>
-                </div>
-              </div>
             </div>
 
             {/* Ubicación */}
