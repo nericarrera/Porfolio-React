@@ -1,8 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Rocket, Building2, ShoppingCart, Check, ArrowRight, Wrench, Zap, Crown } from 'lucide-react';
+import { Rocket, Building2, ShoppingCart, Check, ArrowRight, Wrench, Zap, Crown, AlertCircle, CreditCard, X } from 'lucide-react';
 import Link from 'next/link';
+
 
 // ===============================
 // 📦 PAQUETES DE SERVICIOS
@@ -238,6 +239,69 @@ const ServicesSection = () => {
                     </li>
                   ))}
                 </ul>
+
+                 {/* ─── QUÉ NO INCLUYE + FORMA DE PAGO ─── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20"
+        >
+          {/* Qué NO incluye */}
+          <div className="rounded-2xl p-6 bg-white/5 backdrop-blur-sm border border-white/10">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
+                <AlertCircle className="w-5 h-5 text-amber-400" />
+              </div>
+              <h4 className="text-lg font-bold text-white">
+                Qué NO incluye ningún plan
+              </h4>
+            </div>
+            <ul className="space-y-3">
+              {[
+                'Hosting y dominio (se pagan aparte al proveedor)',
+                'Costos de servicios externos (MercadoPago, email, etc.)',
+                'Contenido (fotos, textos, logos) — los provee el cliente',
+                'Mantenimiento después del período de soporte',
+                'Cambios mayores post-entrega (se cotizan aparte)',
+                'Gestión de redes sociales o publicidad',
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <X className="w-4 h-4 flex-shrink-0 mt-1 text-amber-400" />
+                  <span className="text-sm text-gray-300">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Forma de pago + Extras */}
+          <div className="rounded-2xl p-6 bg-white/5 backdrop-blur-sm border border-white/10">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
+                <CreditCard className="w-5 h-5 text-emerald-400" />
+              </div>
+              <h4 className="text-lg font-bold text-white">
+                Forma de pago y condiciones
+              </h4>
+            </div>
+            <ul className="space-y-3">
+              {[
+                '50% al inicio, 50% contra entrega',
+                'Transferencia bancaria o MercadoPago',
+                'Factura A o B según necesidad',
+                'El código es 100% tuyo al finalizar el proyecto',
+                'Garantía de 30 días para bugs del desarrollo',
+                'Cambios de alcance se cotizan por separado',
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <Check className="w-4 h-4 flex-shrink-0 mt-1 text-emerald-400" />
+                  <span className="text-sm text-gray-300">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
 
                 {/* CTA */}
                 <Link
