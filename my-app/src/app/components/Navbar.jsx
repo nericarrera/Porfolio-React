@@ -11,6 +11,7 @@ import { Menu, X, ArrowRight, MessageCircle } from 'lucide-react';
 const navItems = [
   { href: '#servicios', label: 'Servicios' },
   { href: '#proyectos', label: 'Proyectos' },
+  { href: '#sobre-mi', label: 'Sobre mí' },
   { href: '#formacion', label: 'Formación' },
   { href: '#skills', label: 'Skills' },
   { href: '#contacto', label: 'Contacto' },
