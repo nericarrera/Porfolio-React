@@ -240,7 +240,24 @@ const ServicesSection = () => {
                   ))}
                 </ul>
 
-                 {/* ─── QUÉ NO INCLUYE + FORMA DE PAGO ─── */}
+                {/* CTA */}
+                <Link
+                  href="#contacto"
+                  className={`group inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-xl font-semibold transition-all duration-300 ${
+                    pkg.highlighted
+                      ? 'bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white shadow-lg shadow-sky-500/30 hover:shadow-sky-500/50'
+                      : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/40'
+                  }`}
+                >
+                  {pkg.cta}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* ─── QUÉ NO INCLUYE + FORMA DE PAGO ─── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -302,23 +319,6 @@ const ServicesSection = () => {
             </ul>
           </div>
         </motion.div>
-
-                {/* CTA */}
-                <Link
-                  href="#contacto"
-                  className={`group inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-xl font-semibold transition-all duration-300 ${
-                    pkg.highlighted
-                      ? 'bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white shadow-lg shadow-sky-500/30 hover:shadow-sky-500/50'
-                      : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/40'
-                  }`}
-                >
-                  {pkg.cta}
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </motion.div>
-            );
-          })}
-        </div>
 
         {/* ─── SECCIÓN MANTENIMIENTO ─── */}
         <motion.div

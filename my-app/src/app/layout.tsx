@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
 import Navbar from "./components/Navbar";
-
-declare const require: (moduleName: string) => unknown;
-require("./globals.css");
+import "./globals.css";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
