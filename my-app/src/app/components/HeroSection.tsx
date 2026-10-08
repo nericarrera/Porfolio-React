@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Briefcase, GitBranch, Mail } from 'lucide-react';
+import { ArrowRight, Briefcase, GitBranch, Mail, MessageCircle } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -48,7 +48,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 max-w-5xl leading-tight"
+          className="text-3xl sm:text-5xl md:text-6xl lg:text-6xl font-bold text-white mb-6 max-w-5xl leading-tight"
         >
           Desarrollo{' '}
           <span className="bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
@@ -62,7 +62,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-lg md:text-xl text-gray-200 mb-4 max-w-2xl font-light"
+          className="text-lg md:text-xl text-gray-200 mb-4 mt-5 max-w-2xl font-light"
         >
           Full-stack developer con foco en resultados. React · Next.js · NestJS · PostgreSQL · MercadoPago.
         </motion.p>
@@ -72,7 +72,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-sm md:text-base text-gray-400 mb-12 max-w-xl"
+          className="text-sm md:text-base text-gray-400 mb-12 mt-5 max-w-xl"
         >
           Trabajo con procesos claros, entregas semanales y soporte post-lanzamiento.
         </motion.p>
@@ -109,6 +109,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex items-center gap-4"
         >
+          {/* EMAIL */}
           <a
             href="mailto:nericarrera1825@gmail.com"
             aria-label="Email"
@@ -116,8 +117,21 @@ const HeroSection = () => {
           >
             <Mail className="w-5 h-5" />
           </a>
+
+          {/* WHATSAPP */}
           <a
-            href="https://github.com/tu-usuario"
+            href="https://wa.me/5491121764065?text=Hola%20Neri,%20vi%20tu%20portfolio%20y%20quiero%20consultarte%20por%20un%20proyecto"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+            className="p-3 rounded-full bg-white/5 hover:bg-emerald-500/20 border border-white/20 hover:border-emerald-400/60 text-white hover:text-emerald-300 transition-all duration-300"
+          >
+            <MessageCircle className="w-5 h-5" />
+          </a>
+
+          {/* GITHUB */}
+          <a
+            href="https://github.com/nericarrera"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
@@ -125,8 +139,10 @@ const HeroSection = () => {
           >
             <GitBranch className="w-5 h-5" />
           </a>
+
+          {/* LINKEDIN */}
           <a
-            href="https://linkedin.com/in/tu-usuario"
+            href="https://linkedin.com/in/nericarrera"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
