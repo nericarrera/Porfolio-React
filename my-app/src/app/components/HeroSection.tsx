@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Mail, Github, Linkedin } from 'lucide-react';
+import { ArrowRight, Briefcase, GitBranch, Mail } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -123,7 +123,7 @@ const HeroSection = () => {
             aria-label="GitHub"
             className="p-3 rounded-full bg-white/5 hover:bg-white/15 border border-white/20 hover:border-white/40 text-white transition-all duration-300"
           >
-            <Github className="w-5 h-5" />
+            <GitBranch className="w-5 h-5" />
           </a>
           <a
             href="https://linkedin.com/in/tu-usuario"
@@ -132,7 +132,7 @@ const HeroSection = () => {
             aria-label="LinkedIn"
             className="p-3 rounded-full bg-white/5 hover:bg-white/15 border border-white/20 hover:border-white/40 text-white transition-all duration-300"
           >
-            <Linkedin className="w-5 h-5" />
+            <Briefcase className="w-5 h-5" />
           </a>
         </motion.div>
       </div>
