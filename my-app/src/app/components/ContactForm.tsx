@@ -50,6 +50,7 @@ interface EmailJSError {
 const EMAILJS_CONFIG = {
   serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
   templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+  autoReplyTemplateId: process.env.NEXT_PUBLIC_EMAILJS_AUTOREPLY_TEMPLATE_ID, // ✅ NUEVA
   publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
 };
 
@@ -83,8 +84,9 @@ const ContactForm = () => {
 
   // ─── VERIFICAR CONFIG ───
   useEffect(() => {
-    const { serviceId, templateId, publicKey } = EMAILJS_CONFIG;
-    const allSet = Boolean(serviceId && templateId && publicKey);
+    const { serviceId, templateId, autoReplyTemplateId, publicKey } = EMAILJS_CONFIG;
+    // ✅ Ahora verificamos las 4 variables
+    const allSet = Boolean(serviceId && templateId && autoReplyTemplateId && publicKey);
 
     if (!allSet && process.env.NODE_ENV === 'development') {
       console.error(
@@ -122,7 +124,6 @@ const ContactForm = () => {
 
     // Honeypot: si el campo "website" tiene contenido, es un bot
     if (formData.website) {
-      // Engañamos al bot con éxito falso
       setSubmitStatus({
         success: true,
         message: '¡Mensaje enviado con éxito!',
@@ -178,22 +179,39 @@ const ContactForm = () => {
         message: sanitizeInput(formData.message),
       };
 
-      // Enviamos usando send() con los datos sanitizados
+      // ✅ Armamos el paquete de variables una sola vez
+      const templateParams = {
+        from_name: sanitizedData.name,
+        from_email: sanitizedData.email,
+        from_phone: sanitizedData.phone || 'No especificado',
+        project_type: sanitizedData.projectType,
+        message: sanitizedData.message,
+        to_name: 'Neri Carrera',
+      };
+
+      // 1️⃣ Enviamos la NOTIFICACIÓN a vos (Neri)
       const result = await emailjs.send(
         EMAILJS_CONFIG.serviceId!,
-        EMAILJS_CONFIG.templateId!,
-        {
-          from_name: sanitizedData.name,
-          from_email: sanitizedData.email,
-          from_phone: sanitizedData.phone || 'No especificado',
-          project_type: sanitizedData.projectType,
-          message: sanitizedData.message,
-          to_name: 'Neri Carrera',
-        },
+        EMAILJS_CONFIG.templateId!, // Template de notificación
+        templateParams,
         EMAILJS_CONFIG.publicKey!
       );
 
       if (result.status === 200) {
+        // 2️⃣ Enviamos la AUTO-RESPUESTA al cliente
+        try {
+          await emailjs.send(
+            EMAILJS_CONFIG.serviceId!,
+            EMAILJS_CONFIG.autoReplyTemplateId!, // Template de auto-respuesta
+            templateParams,
+            EMAILJS_CONFIG.publicKey!
+          );
+        } catch (autoReplyError) {
+          // Si falla la auto-respuesta, no rompemos el flujo principal
+          console.warn('[Contact] Falló el correo de auto-respuesta:', autoReplyError);
+        }
+
+        // ✅ Éxito total
         setSubmitStatus({
           success: true,
           message: '¡Mensaje enviado con éxito! Te respondo en menos de 24 horas.',
